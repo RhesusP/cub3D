@@ -4,7 +4,7 @@
 
 ### Règles
 
-- [ ] Vérifier le nombre d'argument
+- [x] Vérifier le nombre d'argument
 - [ ] Vérifier l'extension `.cub`
 - [ ] La carte doit posséder uniquement ces caractères: des 1 et des 0 et **exactement un seul** caractère parmis N S E et W.
 - [ ] La carte doit être fermée / entourée de murs
