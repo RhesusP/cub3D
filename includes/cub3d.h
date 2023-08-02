@@ -6,13 +6,12 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:34:21 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/02 19:37:26 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/02 21:33:43 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 # include "./../libft/libft.h"
-
 
 #endif
