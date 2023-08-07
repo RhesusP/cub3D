@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/18 09:18:54 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/03 09:24:23 by cbernot          ###   ########.fr       */
+/*   Created: 2023/08/07 09:33:38 by cbernot           #+#    #+#             */
+/*   Updated: 2023/08/07 09:34:15 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "./../includes/cub3d.h"
 
-# include <sys/types.h>
-# include <sys/uio.h>
-# include "./../libft.h"
+unsigned int	ft_strlen_wnl(char *str)
+{
+	unsigned int	i;
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 16
-# endif
-
-char	*get_next_line(int fd);
-void	*ft_free_stash(char **stash, int create_line);
-
-#endif
+	i = 0;
+	while (str[i] != '\0' && str[i] != '\n')
+		i++;
+	return (i);
+}
