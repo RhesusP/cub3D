@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 10:12:56 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/07 09:41:32 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/08 19:39:21 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,15 @@ void	init_void_map(t_map_info *map)
 	map->ea_texture = NULL;
 	map->floor_color = -1;
 	map->ceiling_color = -1;
-	map->width = -1;
-	map->height = -1;
+	map->map_width = 0;
+	map->map_height = 0;
 	map->sprite_texture = NULL;
 	map->map = NULL;
+	map->player.map_pos.x = 0;
+	map->player.map_pos.y = 0;
+	map->player.mini_pos.x = 0;
+	map->player.mini_pos.y = 0;
+	map->player.dir = 0;
 }
 
 int	init_map_array(t_map_info *map, int height, int width)
@@ -99,8 +104,8 @@ void	debug_print_map(t_map_info *map)
 		printf("Ceiling color: UNDEFINED\n");
 	else
 		printf("Ceiling color: %d\n", map->ceiling_color);
-	printf("Width: %d\n", map->width);
-	printf("Height: %d\n", map->height);
+	printf("Width: %d\n", map->map_width);
+	printf("Height: %d\n", map->map_height);
 	printf("map: \n");
 	i = 0;
 	while (map->map[i])
@@ -108,6 +113,7 @@ void	debug_print_map(t_map_info *map)
 		printf("%s\n", map->map[i]);
 		i++;
 	}
-	printf("\nPlayer position: %f, %f\n", map->player.x, map->player.y);
-	printf("Player direction: %f\n", map->player_or);
+	printf("Player in map: (%d, %d)\n", map->player.map_pos.x, map->player.map_pos.x);
+	printf("Player in minimap: (%d, %d)\n", map->player.mini_pos.x, map->player.mini_pos.x);
+	printf("Player direction: %f\n", map->player.dir);
 }

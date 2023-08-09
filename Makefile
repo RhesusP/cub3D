@@ -6,7 +6,7 @@
 #    By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/08/07 09:46:52 by cbernot          ###   ########.fr        #
+#    Updated: 2023/08/09 12:24:50 by cbernot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,13 +14,16 @@ NAME	=	cub3D
 SRCS	=	./srcs/main.c \
 			./srcs/minimap/minimap.c \
 			./srcs/mlx/trace.c \
+			./srcs/mlx/bressenham.c \
+			./srcs/mlx/mlx_utils.c \
 			./srcs/parsing/add_colors.c \
 			./srcs/parsing/add_textures.c \
 			./srcs/parsing/parse_map.c \
 			./srcs/parsing/player.c \
-			./srcs/raycasting/wall_finder.c \
+			./srcs/raycasting/draw_frame.c \
 			./srcs/map_utils.c \
-			./srcs/utils.c
+			./srcs/utils.c \
+			./srcs/movement.c
 
 MINILIBX_DIR	=	minilibx_opengl/
 MINILIBX_NAME	=	libmlx.a

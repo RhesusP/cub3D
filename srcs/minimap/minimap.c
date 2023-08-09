@@ -6,22 +6,40 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 16:35:53 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/07 09:30:16 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/09 12:23:12 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/cub3d.h"
 
-void	trace_cube(t_mlx_data *data, int x, int y, int color)
+void	trace_wall(t_mlx_data *data, int x, int y, int color)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (i < MINI_CUBE_SIZE)
+	while (i < MINI_SIZE)
 	{
 		j = 0;
-		while (j < MINI_CUBE_SIZE)
+		while (j < MINI_SIZE)
+		{
+			ft_mlx_pixel_put(data, x + i, y + j, color);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	put_player(t_mlx_data *data, int x, int y, int color)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < 2)
+	{
+		j = 0;
+		while (j < 2)
 		{
 			ft_mlx_pixel_put(data, x + i, y + j, color);
 			j++;
@@ -32,8 +50,9 @@ void	trace_cube(t_mlx_data *data, int x, int y, int color)
 
 void	draw_minimap(t_map_info *map, t_mlx_data *img)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	t_point	end_line;
 
 	i = 0;
 	while (map->map[i])
@@ -42,12 +61,14 @@ void	draw_minimap(t_map_info *map, t_mlx_data *img)
 		while (map->map[i][j])
 		{
 			if (map->map[i][j] == '1')
-				trace_cube(img, j * MINI_CUBE_SIZE, i * MINI_CUBE_SIZE, \
+				trace_wall(img, j * MINI_SIZE, i * MINI_SIZE, \
 				0x00FFFFFF);
 			j++;
 		}
 		i++;
 	}
-	trace_cube(img, (map->player.x / CUBE_SIZE) * MINI_CUBE_SIZE, \
-	(map->player.y / CUBE_SIZE) * MINI_CUBE_SIZE, 0x00FF0000);
+	put_player(img, map->player.mini_pos.x, map->player.mini_pos.y, 0x00FF0000);
+	end_line.x = map->player.mini_pos.x + cos(map->player.dir) * 16;
+	end_line.y = map->player.mini_pos.y + sin(map->player.dir) * 16;
+	ft_draw_line(img, map->player.mini_pos, end_line);
 }

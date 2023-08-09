@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 09:15:19 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/07 09:39:14 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/08 19:17:20 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	get_line(char *line, t_map_info *map)
 		if ((int)ft_strlen_wnl(line) > max_width)
 			max_width = ft_strlen_wnl(line);
 	}
-	map->height = height;
-	map->width = max_width;
+	map->map_height = height;
+	map->map_width = max_width;
 }
 
 int	fill_map_row(char *line, t_map_info *map, int row)
@@ -55,7 +55,7 @@ int	fill_map_row(char *line, t_map_info *map, int row)
 			return (print_error("invalid character in map description\n", 0, 0));
 		i++;
 	}
-	while (i < map->width)
+	while (i < map->map_width)
 	{
 		map->map[row][i] = ' ';
 		i++;
@@ -106,7 +106,7 @@ int	parse_map(char *map_path, t_map_info *map)
 		get_line(line, map);
 		free(line);
 	}
-	init_map_array(map, map->height, map->width);
+	init_map_array(map, map->map_height, map->map_width);
 	close(fd);
 	fill_map_array(map_path, map);
 	get_start_pos(map);

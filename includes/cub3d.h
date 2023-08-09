@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:34:21 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/07 09:52:40 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/09 12:25:57 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,27 @@
 # include <math.h>
 
 # define CUBE_SIZE 64
-# define MINI_CUBE_SIZE 8
-# define FOV 60 * M_PI / 180
-# define HALF_FOV FOV / 2
+# define MINI_SIZE 8
+# define FOV 60
+# define HALF_FOV 30
 # define PLAYER_HEIGHT 32
-# define PROJECTION_DISTANCE 1108	// 1280 / 2 / tan(FOV / 2)
+# define PROJECTION_DISTANCE 1024
 # define HEIGHT 720
 # define WIDTH 1280
+# define ROT_SPEED 0.02
+
+# define LEFT_ARROW 123
+# define RIGHT_ARROW 124
+# define FORWARD 13
+# define BACKWARD 1
+# define LEFT 0
+# define RIGHT 2
+# define ESC 53
 
 typedef struct	s_point
 {
-	double	x;
-	double	y;
+	int	x;
+	int	y;
 }	t_point;
 
 typedef struct	s_mlx_data
@@ -43,27 +52,36 @@ typedef struct	s_mlx_data
 
 typedef struct	s_frame
 {
-	double	distance;
+	float	distance;
 	double	angle;
-	double	height;
+	float	height;
 }	t_frame;
 
+typedef struct	s_player
+{
+	t_point	map_pos;
+	t_point	mini_pos;
+	double	dir;
+	double	speed;
+}	t_player;
 
 typedef struct	s_map_info
 {
+	void		*mlx;
+	void		*mlx_win;
+	t_mlx_data	mlx_img;
 	char		*no_texture;
 	char		*so_texture;
 	char		*we_texture;
 	char		*ea_texture;
 	int			floor_color;
 	int			ceiling_color;
-	int			width;
-	int			height;
+	int			map_width;
+	int			map_height;
 	char		*sprite_texture;
 	char		**map;
 	t_frame		*frame;
-	t_point		player;
-	double		player_or;
+	t_player	player;
 }	t_map_info;
 
 /* ------- PARSING -------*/
@@ -77,11 +95,20 @@ int				add_ceiling_color(char *line, t_map_info *map);
 void			get_start_pos(t_map_info *map);
 
 /* --------- MLX  --------*/
+void			start_mlx(t_map_info *map);
 void			draw_slice(t_map_info *map, t_mlx_data *img, int index);
 void			ft_mlx_pixel_put(t_mlx_data *data, int x, int y, int color);
+void			ft_draw_line(t_mlx_data *img, t_point p1, t_point p2);
+
+/* ------ MOVEMENT ------*/
+void			move_forward(t_map_info *map);
+void			move_backward(t_map_info *map);
+void			move_left(t_map_info *map);
+void			move_right(t_map_info *map);
 
 /* ----- RAYCASTING ------*/
 double	find_wall(t_map_info *map, double orientation);
+void	draw_frame(t_map_info *map);
 
 /* -------- UTILS --------*/
 int				print_error(char *str, int use_perror, int exit_status);
