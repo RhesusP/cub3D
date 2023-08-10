@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 09:34:59 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/09 12:22:15 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/10 15:47:50 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	get_start_pos(t_map_info *map)
 				map->player.mini_pos.x = j * MINI_SIZE + MINI_SIZE / 2;
 				map->player.mini_pos.y = i * MINI_SIZE + MINI_SIZE / 2;
 				map->player.dir = get_player_orientation(map->map[i][j]);
-				map->player.speed = 4.0;
+				map->player.speed = SPEED;
 				return ;
 			}
 			j++;

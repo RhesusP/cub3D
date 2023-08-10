@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 16:35:53 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/09 12:23:12 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/10 18:08:49 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,5 @@ void	draw_minimap(t_map_info *map, t_mlx_data *img)
 	put_player(img, map->player.mini_pos.x, map->player.mini_pos.y, 0x00FF0000);
 	end_line.x = map->player.mini_pos.x + cos(map->player.dir) * 16;
 	end_line.y = map->player.mini_pos.y + sin(map->player.dir) * 16;
-	ft_draw_line(img, map->player.mini_pos, end_line);
+	ft_draw_line(img, map->player.mini_pos, end_line, 0x00FFFF00);
 }

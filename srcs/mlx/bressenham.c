@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 20:08:05 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/09 12:25:52 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/09 21:48:47 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	absolute(int *d, int *i)
 	}
 }
 
-static void	draw_seg_low(t_mlx_data *img, t_point p1, t_point p2)
+static void	draw_seg_low(t_mlx_data *img, t_point p1, t_point p2, int col)
 {
 	int	dy;
 	int	yi;
@@ -37,7 +37,7 @@ static void	draw_seg_low(t_mlx_data *img, t_point p1, t_point p2)
 	x = p1.x;
 	while (x < p2.x)
 	{
-		ft_mlx_pixel_put(img, x, y, 0x0000FF00);
+		ft_mlx_pixel_put(img, x, y, col);
 		if (derive > 0)
 		{
 			y += yi;
@@ -49,7 +49,7 @@ static void	draw_seg_low(t_mlx_data *img, t_point p1, t_point p2)
 	}
 }
 
-static void	draw_seg_high(t_mlx_data *img, t_point p1, t_point p2)
+static void	draw_seg_high(t_mlx_data *img, t_point p1, t_point p2, int col)
 {
 	int	dx;
 	int	xi;
@@ -65,7 +65,7 @@ static void	draw_seg_high(t_mlx_data *img, t_point p1, t_point p2)
 	x = p1.x;
 	while (y < p2.y)
 	{
-		ft_mlx_pixel_put(img, x, y, 0x0000FF00);
+		ft_mlx_pixel_put(img, x, y, col);
 		if (derive > 0)
 		{
 			x += xi;
@@ -77,20 +77,20 @@ static void	draw_seg_high(t_mlx_data *img, t_point p1, t_point p2)
 	}
 }
 
-void	ft_draw_line(t_mlx_data *img, t_point p1, t_point p2)
+void	ft_draw_line(t_mlx_data *img, t_point p1, t_point p2, int col)
 {
 	if (abs(p2.y - p1.y) < abs(p2.x - p1.x))
 	{
 		if (p1.x > p2.x)
-			draw_seg_low(img, p2, p1);
+			draw_seg_low(img, p2, p1, col);
 		else
-			draw_seg_low(img, p1, p2);
+			draw_seg_low(img, p1, p2, col);
 	}
 	else
 	{
 		if (p1.y > p2.y)
-			draw_seg_high(img, p2, p1);
+			draw_seg_high(img, p2, p1, col);
 		else
-			draw_seg_high(img, p1, p2);
+			draw_seg_high(img, p1, p2, col);
 	}
 }

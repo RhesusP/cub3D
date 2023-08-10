@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 09:32:12 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/07 09:33:08 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/10 18:51:52 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	add_floor_color(char *line, t_map_info *map)
 	i = 1;
 	while (line[i] == ' ')
 		i++;
-	map->floor_color = ft_atoi(&line[i]);
+	map->floor_color = create_mlx_color(0, 100, 100, 100);
 	return (1);
 }
 
@@ -34,6 +34,6 @@ int	add_ceiling_color(char *line, t_map_info *map)
 	i = 1;
 	while (line[i] == ' ')
 		i++;
-	map->ceiling_color = ft_atoi(&line[i]);
+	map->ceiling_color = create_mlx_color(0, 82, 157, 229);
 	return (1);
 }

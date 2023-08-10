@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 10:12:56 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/08 19:39:21 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/09 12:48:44 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,5 +115,5 @@ void	debug_print_map(t_map_info *map)
 	}
 	printf("Player in map: (%d, %d)\n", map->player.map_pos.x, map->player.map_pos.x);
 	printf("Player in minimap: (%d, %d)\n", map->player.mini_pos.x, map->player.mini_pos.x);
-	printf("Player direction: %f\n", map->player.dir);
+	printf("Player direction: %f rad --> %f deg\n", map->player.dir, map->player.dir * 180 / M_PI);
 }

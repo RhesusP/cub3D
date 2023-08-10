@@ -128,3 +128,4 @@ Steps are:
 
 [JavaScript RayCasting tutoriel](https://github.com/vinibiavatti1/RayCastingTutorial/wiki/Home)  
 [RayCasting tutorial](https://permadi.com/1996/05/ray-casting-tutorial-table-of-contents/)
+[Sprites database](https://spritedatabase.net/system/pc);

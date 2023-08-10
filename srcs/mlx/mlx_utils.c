@@ -6,11 +6,16 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 12:24:29 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/09 12:25:27 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/10 18:44:17 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/cub3d.h"
+
+int	create_mlx_color(int t, int r, int g, int b)
+{
+	return (t << 24 | r << 16 | g << 8 | b);
+}
 
 int	key_hook(int keycode, t_map_info *map)
 {
@@ -19,6 +24,7 @@ int	key_hook(int keycode, t_map_info *map)
 		mlx_clear_window(map->mlx, map->mlx_win);
 		mlx_destroy_image(map->mlx, map->mlx_img.img);
 		map->player.dir -= ROT_SPEED;
+		map->player.dir = normalize_angle(map->player.dir);
 		draw_frame(map);
 	}
 	else if (keycode == RIGHT_ARROW)
@@ -26,6 +32,7 @@ int	key_hook(int keycode, t_map_info *map)
 		mlx_clear_window(map->mlx, map->mlx_win);
 		mlx_destroy_image(map->mlx, map->mlx_img.img);
 		map->player.dir += ROT_SPEED;
+		map->player.dir = normalize_angle(map->player.dir);
 		draw_frame(map);
 	}
 	else if (keycode == FORWARD)

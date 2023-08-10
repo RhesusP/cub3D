@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:34:21 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/09 12:25:57 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/10 18:44:32 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@
 # define FOV 60
 # define HALF_FOV 30
 # define PLAYER_HEIGHT 32
-# define PROJECTION_DISTANCE 1024
+# define PROJECTION_DISTANCE 1108
 # define HEIGHT 720
 # define WIDTH 1280
-# define ROT_SPEED 0.02
+# define SPEED 6.0
+# define ROT_SPEED 0.04
 
 # define LEFT_ARROW 123
 # define RIGHT_ARROW 124
@@ -41,6 +42,12 @@ typedef struct	s_point
 	int	y;
 }	t_point;
 
+typedef struct	s_wall
+{
+	t_point	p;
+	double	dist;
+}	t_wall;
+
 typedef struct	s_mlx_data
 {
 	void	*img;
@@ -52,9 +59,11 @@ typedef struct	s_mlx_data
 
 typedef struct	s_frame
 {
+	t_point	point;
 	float	distance;
 	double	angle;
 	float	height;
+	char	wall_orientation;	// N, S, E or W
 }	t_frame;
 
 typedef struct	s_player
@@ -98,7 +107,8 @@ void			get_start_pos(t_map_info *map);
 void			start_mlx(t_map_info *map);
 void			draw_slice(t_map_info *map, t_mlx_data *img, int index);
 void			ft_mlx_pixel_put(t_mlx_data *data, int x, int y, int color);
-void			ft_draw_line(t_mlx_data *img, t_point p1, t_point p2);
+void			ft_draw_line(t_mlx_data *img, t_point p1, t_point p2, int col);
+int				create_mlx_color(int t, int r, int g, int b);
 
 /* ------ MOVEMENT ------*/
 void			move_forward(t_map_info *map);
@@ -118,6 +128,7 @@ int				init_map_array(t_map_info *map, int height, int width);
 int				is_map_desc(char *line);
 unsigned int	ft_strlen_wnl(char *str);
 void			debug_print_map(t_map_info *map);
+double			normalize_angle(double rad_angle);
 
 /* -------- BONUS --------*/
 void			draw_minimap(t_map_info *map, t_mlx_data *img);
