@@ -1,0 +1,13 @@
+split: NO
+split: ./path_to_the_north_texture
+split: SO
+split: ./path_to_the_south_texture
+split: WE
+split: ./path_to_the_west_texture
+split: EA
+split: ./path_to_the_east_texture
+split: F
+split: 220,100,0
+split: C
+split: 225,30,0
+start: 0, god: -1

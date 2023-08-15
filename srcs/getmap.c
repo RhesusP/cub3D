@@ -6,7 +6,7 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:38:49 by svanmeen          #+#    #+#             */
-/*   Updated: 2023/08/15 20:15:01 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/08/15 20:37:37 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,48 @@ char	**strscat(char **strs, char *str)
 	return (new);
 }
 
-void	print_raw_map(char **raw)
+int	ft_getcaracters(char **strs)
 {
 	int	i;
+	int	j;
 
 	i = 0;
-	while (raw[i])
+	j = 0;
+	while (strs[i])
 	{
-		ft_printf("%s\n", raw[i]);
+		j = 0;
+		while (strs[i][j])
+			j++;
 		i++;
 	}
+	return (j - i);
+}
+
+void	fill(t_map *map, char **raw)
+{
+	int	i;
+	int	j;
+	int	k;
+
+	i = 0;
+	j = 0;
+	k = 0;
+	while (raw[i])
+	{
+		j = 0;
+		while (raw[i][j + 1])
+		{
+			map[k].x = i;
+			map[k].y = j;
+			map[k].val = raw[i][j] - 48;
+			k++;
+			j++;
+		}
+		i++;
+	}
+	map[k].x = -1;
+	map[k].y = -1;
+	map[k].val = -1;
 }
 
 t_map	*get_raw_map(int fd)
@@ -55,6 +87,7 @@ t_map	*get_raw_map(int fd)
 	t_map	*map;
 	char	**raw;
 	char	*line;
+	int		nb_pts;
 
 	raw = init_strs();
 	(void)map;
@@ -65,6 +98,11 @@ t_map	*get_raw_map(int fd)
 		free(line);
 		line = get_next_data(fd);
 	}
-	print_raw_map(raw);
-	return (NULL);
+	nb_pts = ft_getcaracters(raw);
+	map = malloc(sizeof(t_map) * nb_pts + 1);
+	if (!map)
+		return (NULL);
+	fill(map, raw);
+	free(raw);
+	return (map);
 }

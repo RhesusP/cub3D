@@ -6,7 +6,7 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:34:21 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/15 20:14:52 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/08/15 21:28:48 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ t_rsc	*parse_file(int fd);
 t_map	*get_raw_map(int fd);
 char	*get_next_data(int fd);
 int	ft_strslen(char **strs);
+int	check_walls(t_map *map);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/08/15 20:12:38 by svanmeen         ###   ########.fr        #
+#    Updated: 2023/08/15 21:29:06 by svanmeen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME	=	cub3D
 SRCS	=	./srcs/main.c \
 			./srcs/parse_file.c \
 			./srcs/getmap.c \
+			./srcs/checkwalls.c \
 
 MINILIBX_DIR	=	minilibx_opengl/
 MINILIBX_NAME	=	libmlx.a

@@ -6,7 +6,7 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 21:24:17 by svanmeen          #+#    #+#             */
-/*   Updated: 2023/08/15 20:11:56 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/08/15 21:34:33 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@ int	get_settings(int fd, t_settings *set)
 		raw_line = get_next_data(fd);
 		line = ft_strtrim(raw_line, "\n");
 		split = ft_split(line, ' ');
-		ft_printf("split: %s\n", split[0]);
-		ft_printf("split: %s\n", split[1]);
+		//ft_printf("split: %s\n", split[0]);
+		//ft_printf("split: %s\n", split[1]);
 		if (ft_strschr(split[0], "NO") && ft_strslen(split) == 2)
 			set->north_texture = ft_strdup(split[1]);
 		else if (ft_strschr(split[0], "SO") && ft_strslen(split) == 2)
@@ -155,6 +155,18 @@ t_rsc	*init_rsc(void)
 	return (rsc);
 }
 
+void	print_raw(t_map *raw)
+{
+	int	i;
+
+	i = 0;
+	while (raw[i].val != -1)
+	{
+		ft_printf("x: %d, y: %d, val: %d\n", raw[i].x, raw[i].y, raw[i].val);
+		i++;
+	}
+}
+
 t_rsc	*parse_file(int fd)
 {
 	t_rsc	*rsc;
@@ -167,6 +179,8 @@ t_rsc	*parse_file(int fd)
 		return (NULL);
 	raw = get_raw_map(fd);
 	if (!raw)
+		return (NULL);
+	if (check_walls(raw))
 		return (NULL);
 	return (rsc);
 }
