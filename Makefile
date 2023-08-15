@@ -3,15 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+         #
+#    By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/08/02 19:44:43 by cbernot          ###   ########.fr        #
+#    Updated: 2023/08/15 20:12:38 by svanmeen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	cub3D
 SRCS	=	./srcs/main.c \
+			./srcs/parse_file.c \
+			./srcs/getmap.c \
 
 MINILIBX_DIR	=	minilibx_opengl/
 MINILIBX_NAME	=	libmlx.a
@@ -23,14 +25,14 @@ LIBFT		=	$(addprefix $(LIBFT_DIR), $(LIBFT_NAME))
 
 OBJS 		=	${SRCS:.c=.o}
 INCLUDES	=	./includes
-FLAGS		=	-Wall -Wextra -Werror
+FLAGS		=	-g -Wall -Wextra -Werror
 DIR_FLAG	=	--no-print-directory
 
 %.o: %.c | minilibx libft ./includes/cub3d.h
 	cc ${FLAGS} -I ${INCLUDES} -c $< -o $@
 
 ${NAME}: ${OBJS} ${LIBFT} ${MINILIBX} ./includes/cub3d.h
-	cc ${OBJS} -L ./minilibx_opengl -l mlx -framework OpenGL -framework AppKit -L ./libft -lft -o ${NAME}
+	cc ${OBJS} -L ./minilibx_opengl -l mlx -L ./libft -lft -o ${NAME}
 
 all: ${NAME}
 

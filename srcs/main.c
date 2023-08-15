@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:25:31 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/02 21:39:15 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/06 12:38:56 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/cub3d.h"
+
+void	ft_free_settings(t_settings *settings)
+{
+	free(settings->north_texture);
+	free(settings->south_texture);
+	free(settings->east_texture);
+	free(settings->west_texture);
+	free(settings->sprite_texture);
+	free(settings);
+}
 
 int	print_error(char *str)
 {
@@ -34,12 +44,29 @@ int	is_file_extension_correct(char *filename)
 	return (1);
 }
 
-int	main(int argc, char **argv)
+int	check_input(int argc, char **argv)
 {
 	if (argc != 2)
 		return (print_error("Wrong number of arguments\n"));
 	if (!is_file_extension_correct(argv[1]))
 		return (print_error("Wrong file extension\n"));
-	(void)argv;
+	return (0);
+}
+
+int	main(int argc, char **argv)
+{
+	t_rsc	*rsc;
+	int		fd;
+
+	if (check_input(argc, argv))
+		return (EXIT_FAILURE);
+	fd = open(argv[1], O_RDONLY);
+	rsc = parse_file(fd);
+	if (!rsc)
+		return (print_error("Parsing error\n"));
+	/*if (fd == -1)
+		return (perror("open :"));*/
+	ft_free_settings(rsc->settings);
+	free(rsc);
 	return (0);
 }
