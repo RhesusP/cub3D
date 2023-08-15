@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 16:34:14 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/10 18:51:29 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/15 18:34:04 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,30 @@ void	ft_mlx_pixel_put(t_mlx_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
+int	get_wall_color(t_frame frame)
+{
+	if (frame.wall_orientation == NORTH)
+		return (0x00FF0000);
+	else if (frame.wall_orientation == SOUTH)
+		return (0x0000FF00);
+	else if (frame.wall_orientation == EAST)
+		return (0x000000FF);
+	else if (frame.wall_orientation == WEST)
+		return (0x00FFFF00);
+	return (0x00FFFFFF);
+}
+
 void	draw_slice(t_map_info *map, t_mlx_data *img, int index)
 {
 	int	i;
 	int	y_offset;
-	printf("wall or: %c\n", map->frame->wall_orientation);
+	printf("wall or: %d\n", map->frame->wall_orientation);
 	i = 0;
 	if (map->frame[index].height >= HEIGHT)
 	{
 		while (i < HEIGHT)
 		{
-			ft_mlx_pixel_put(img, index, i, 0x00FF0000);
+			ft_mlx_pixel_put(img, index, i, get_wall_color(map->frame[index]));
 			i++;
 		}
 		return ;
@@ -45,7 +58,7 @@ void	draw_slice(t_map_info *map, t_mlx_data *img, int index)
 	}
 	while (i < map->frame[index].height + y_offset)
 	{
-		ft_mlx_pixel_put(img, index, i, 0x00FF0000);
+		ft_mlx_pixel_put(img, index, i, get_wall_color(map->frame[index]));
 		i++;
 	}
 	while (i < HEIGHT)

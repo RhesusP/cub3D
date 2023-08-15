@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 11:12:48 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/10 18:26:31 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/15 21:12:44 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ double	normalize_angle2(double angle)
 
 }
 
-t_point	cast_single_ray(t_map_info *map, double ray_angle)
+t_point	cast_single_ray(t_map_info *map, double ray_angle, t_frame *frame)
 {
 	t_point	hit_point;
 	double two_pi = 2 * M_PI;
@@ -49,6 +49,7 @@ t_point	cast_single_ray(t_map_info *map, double ray_angle)
     double dist = 0;
     double x_hit = 0;
     double y_hit = 0;
+	t_point	check;
 
     double wall_x;
     double wall_y;
@@ -93,7 +94,14 @@ t_point	cast_single_ray(t_map_info *map, double ray_angle)
                 dist = block_dist;
                 x_hit = x;
                 y_hit = y;
+				check.x = 0;
+				check.y = delta_y;
             }
+			else
+			{
+				check.x = right ? 1 : -1;
+				check.y = 0;
+			}
             break;
         }
         x += delta_x;
@@ -109,21 +117,17 @@ t_point	cast_single_ray(t_map_info *map, double ray_angle)
 	t_point	res;
 	res.x = x_hit;
 	res.y = y_hit;
+
+	// get the wall face orientation hit by the ray
+	if (check.x == 1)
+		frame->wall_orientation = 3;
+	else if (check.x == -1)
+		frame->wall_orientation = 1;
+	else if (check.y == 1)
+		frame->wall_orientation = 0;
+	else
+		frame->wall_orientation = 2;
 	return (res);
-}
-
-char get_wall_orientation(double player_or, double ray_angle)
-{
-    double diff = normalize_angle(player_or - ray_angle);
-
-    if (diff >= -M_PI_4 && diff < M_PI_4)
-        return 'N';
-    else if (diff >= M_PI_4 && diff < 3 * M_PI_4)
-        return 'E';
-    else if (diff >= -3 * M_PI_4 && diff < -M_PI_4)
-        return 'W';
-    else
-        return 'S';
 }
 
 // Radian to degree = o * 180/pi
@@ -147,12 +151,11 @@ void	cast_rays(t_map_info *map)
 	ray_orientation = normalize_angle(ray_orientation);
 	while (i < WIDTH)
 	{
-		map->frame[i].point = cast_single_ray(map, ray_orientation);
+		map->frame[i].point = cast_single_ray(map, ray_orientation, &map->frame[i]);
 		fishbowl_corr = cos(normalize_angle(ray_orientation - map->player.dir));
 		map->frame[i].distance = fishbowl_corr * sqrt(pow(map->frame[i].point.x - map->player.map_pos.x, 2) + pow(map->frame[i].point.y - map->player.map_pos.y, 2));
 		map->frame[i].angle = ray_orientation;
 		map->frame[i].height = CUBE_SIZE / map->frame[i].distance * PROJECTION_DISTANCE;
-		map->frame[i].wall_orientation = get_wall_orientation(map->player.dir, ray_orientation);
 		ray_orientation += angle_increment;
 		ray_orientation = normalize_angle(ray_orientation);
 		i++;
@@ -168,7 +171,6 @@ void	cast_rays(t_map_info *map)
 
 void	draw_frame(t_map_info *map)
 {
-	// printf("%f (%f)\n", map->player.dir, map->player.dir * 180.0 / M_PI);
 	map->mlx_img.img = mlx_new_image(map->mlx, WIDTH, HEIGHT);
 	map->mlx_img.addr = mlx_get_data_addr(map->mlx_img.img, \
 		&map->mlx_img.bits_per_pixel, &map->mlx_img.line_length, \

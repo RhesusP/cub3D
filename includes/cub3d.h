@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:34:21 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/10 18:44:32 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/15 17:13:29 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,14 @@
 # define RIGHT 2
 # define ESC 53
 
+enum e_side
+{
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST
+};	
+
 typedef struct	s_point
 {
 	int	x;
@@ -59,11 +67,11 @@ typedef struct	s_mlx_data
 
 typedef struct	s_frame
 {
-	t_point	point;
-	float	distance;
-	double	angle;
-	float	height;
-	char	wall_orientation;	// N, S, E or W
+	t_point		point;
+	float		distance;
+	double		angle;
+	float		height;
+	enum e_side	wall_orientation;
 }	t_frame;
 
 typedef struct	s_player
