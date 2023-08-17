@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 11:12:48 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/15 21:12:44 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/16 20:20:03 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ t_point	cast_single_ray(t_map_info *map, double ray_angle, t_frame *frame)
             dist = dist_x * dist_x + dist_y * dist_y;
             x_hit = x;
             y_hit = y;
+			frame->axis = 1;
             break;
         }
         x += delta_x;
@@ -96,6 +97,7 @@ t_point	cast_single_ray(t_map_info *map, double ray_angle, t_frame *frame)
                 y_hit = y;
 				check.x = 0;
 				check.y = delta_y;
+				frame->axis = 0;
             }
 			else
 			{
@@ -120,13 +122,13 @@ t_point	cast_single_ray(t_map_info *map, double ray_angle, t_frame *frame)
 
 	// get the wall face orientation hit by the ray
 	if (check.x == 1)
-		frame->wall_orientation = 3;
+		frame->wall_face = WEST;
 	else if (check.x == -1)
-		frame->wall_orientation = 1;
+		frame->wall_face = EAST;
 	else if (check.y == 1)
-		frame->wall_orientation = 0;
+		frame->wall_face = NORTH;
 	else
-		frame->wall_orientation = 2;
+		frame->wall_face = SOUTH;
 	return (res);
 }
 

@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 16:34:14 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/15 18:34:04 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/17 11:45:29 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,61 @@ void	ft_mlx_pixel_put(t_mlx_data *data, int x, int y, int color)
 
 int	get_wall_color(t_frame frame)
 {
-	if (frame.wall_orientation == NORTH)
-		return (0x00FF0000);
-	else if (frame.wall_orientation == SOUTH)
-		return (0x0000FF00);
-	else if (frame.wall_orientation == EAST)
-		return (0x000000FF);
-	else if (frame.wall_orientation == WEST)
-		return (0x00FFFF00);
-	return (0x00FFFFFF);
+	if (frame.wall_face == NORTH)			// red
+		return (create_mlx_color(0, 255, 0, 0));
+	else if (frame.wall_face == SOUTH)		// green
+		return (create_mlx_color(0, 0, 255, 0));
+	else if (frame.wall_face == EAST)		// blue
+		return (create_mlx_color(0, 0, 0, 255));
+	else if (frame.wall_face == WEST)
+		return (create_mlx_color(0, 255, 0, 255));	// purple
+	return (create_mlx_color(0, 0, 0, 0));			// black
+}
+
+t_text	*get_texture(t_map_info *map, enum e_side side)
+{
+	if (side == NORTH)
+		return (map->no_texture);
+	else if (side == SOUTH)
+		return (map->so_texture);
+	else if (side == EAST)
+		return (map->ea_texture);
+	else
+		return (map->we_texture);
+}
+
+void	draw_texture_col(t_map_info *map, t_frame frame, int x, int offset)
+{
+	float	scale;
+	int		texture_x_offset;
+	t_text	*texture;
+	double	text_y;
+	int		texture_y;
+	int 	y;
+	int		color;
+
+	texture = get_texture(map, frame.wall_face);
+	scale = texture->height / frame.height;
+	if (frame.axis == 1)
+		texture_x_offset = frame.point.y % CUBE_SIZE;
+	else
+		texture_x_offset = frame.point.x % CUBE_SIZE;
+	text_y = 0;
+	y = 0;
+	while (y < frame.height)
+	{
+		texture_y = (int)text_y % texture->height;
+		color = get_texture_pixel(texture, texture_x_offset, texture_y);
+		ft_mlx_pixel_put(&map->mlx_img, x, y + offset, color);
+		text_y += scale;
+		y++;
+	}
 }
 
 void	draw_slice(t_map_info *map, t_mlx_data *img, int index)
 {
 	int	i;
 	int	y_offset;
-	printf("wall or: %d\n", map->frame->wall_orientation);
 	i = 0;
 	if (map->frame[index].height >= HEIGHT)
 	{
@@ -51,16 +90,15 @@ void	draw_slice(t_map_info *map, t_mlx_data *img, int index)
 	y_offset = (HEIGHT - map->frame[index].height) / 2;
 	if (y_offset < 0)
 		return ;
+	// draw ceil
 	while (i < y_offset)
 	{
 		ft_mlx_pixel_put(img, index, i, map->ceiling_color);
 		i++;
 	}
-	while (i < map->frame[index].height + y_offset)
-	{
-		ft_mlx_pixel_put(img, index, i, get_wall_color(map->frame[index]));
-		i++;
-	}
+	// draw wall
+	draw_texture_col(map, map->frame[index], index, i);
+	i = map->frame[index].height + y_offset;
 	while (i < HEIGHT)
 	{
 		ft_mlx_pixel_put(img, index, i, map->floor_color);

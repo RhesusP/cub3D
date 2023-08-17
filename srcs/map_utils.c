@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 10:12:56 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/09 12:48:44 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/16 12:28:53 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	init_void_map(t_map_info *map)
 {
-	map->no_texture = NULL;
-	map->so_texture = NULL;
-	map->we_texture = NULL;
-	map->ea_texture = NULL;
+	map->no_texture = malloc(sizeof(t_text));
+	map->so_texture = malloc(sizeof(t_text));
+	map->ea_texture = malloc(sizeof(t_text));
+	map->we_texture = malloc(sizeof(t_text));
 	map->floor_color = -1;
 	map->ceiling_color = -1;
 	map->map_width = 0;
@@ -79,23 +79,7 @@ int	is_map_desc(char *line)
 void	debug_print_map(t_map_info *map)
 {
 	int i;
-
-	if (map->no_texture)
-		printf("NO texture: %s\n", map->no_texture);
-	else
-		printf("NO texture: NULL\n");
-	if (map->so_texture)
-		printf("SO texture: %s\n", map->so_texture);
-	else
-		printf("SO texture: NULL\n");
-	if (map->we_texture)
-		printf("WE texture: %s\n", map->we_texture);
-	else
-		printf("WE texture: NULL\n");
-	if (map->ea_texture)
-		printf("EA texture: %s\n", map->ea_texture);
-	else
-		printf("EA texture: NULL\n");
+	
 	if (map->floor_color == -1)
 		printf("Floor color: UNDEFINED\n");
 	else

@@ -101,28 +101,16 @@ So:
 
 Instead of tracing a ray for each pixel on the screen, we trace a ray for **each column** (1280) on the screen
 
-### Finding walls
+### Raycasting
 
-![](https://permadi.com/tutorial/raycast/images/figure13.jpg)
-Casting rays can be done in a loop : 
-1. Trace a ray until it hits a wall
-2. Record the distance to the wall (lenght of the ray)
-3. Add the angle increment so that the ray moves to the right (we knwo that the value of the angle increment is 60/1280)
-4. Repeat step 1 and 2 until 1280 rays are cast
+### DDA algorithm
 
-💡 The trick is that instead of checking each pixels, we only have to check each grid. This is because a wall can only appear on a grid boundary
+### Texturing walls
+👉 MinilibX allows to use images in png and xmp formats but using images in png format causes memory leaks. So here, we use the followong function : 
+```c
+void	*mlx_xpm_file_to_image(void *mlx_ptr, char *filename, int *width, int *height);
+```
 
-![](https://permadi.com/tutorial/raycast/images/figure14.gif)
-
-#### Checking horizontal intersections
-
-![](https://permadi.com/tutorial/raycast/images/figure15.gif)
-Steps are: 
-1. Find coordinates of the first intersection point (A)
-2. Find Ya
-3. Find Xa using the equation 
-4. If the point is a wall, stop and calculate the distance
-5. If there is no wall, extend to the next intersection point (Xnew) = Xold + Xa and (Ynew) = Yold + Ya
 
 ## Useful links
 

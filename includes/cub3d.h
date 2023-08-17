@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:34:21 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/15 17:13:29 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/17 11:44:26 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,25 @@ typedef struct	s_mlx_data
 	int		endian;
 }	t_mlx_data;
 
+typedef struct	s_text
+{
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+	int			width;
+	int			height;
+}	t_text;
+
 typedef struct	s_frame
 {
 	t_point		point;
 	float		distance;
 	double		angle;
 	float		height;
-	enum e_side	wall_orientation;
+	int			axis;		// 0 is x, 1 is y
+	enum e_side	wall_face;
 }	t_frame;
 
 typedef struct	s_player
@@ -87,10 +99,10 @@ typedef struct	s_map_info
 	void		*mlx;
 	void		*mlx_win;
 	t_mlx_data	mlx_img;
-	char		*no_texture;
-	char		*so_texture;
-	char		*we_texture;
-	char		*ea_texture;
+	t_text		*no_texture;
+	t_text		*so_texture;
+	t_text		*we_texture;
+	t_text		*ea_texture;
 	int			floor_color;
 	int			ceiling_color;
 	int			map_width;
@@ -117,6 +129,8 @@ void			draw_slice(t_map_info *map, t_mlx_data *img, int index);
 void			ft_mlx_pixel_put(t_mlx_data *data, int x, int y, int color);
 void			ft_draw_line(t_mlx_data *img, t_point p1, t_point p2, int col);
 int				create_mlx_color(int t, int r, int g, int b);
+int				load_texture(t_map_info *map, t_text *texture, char *path);
+int				get_texture_pixel(t_text *text, int x, int y);
 
 /* ------ MOVEMENT ------*/
 void			move_forward(t_map_info *map);
@@ -135,6 +149,7 @@ void			init_void_map(t_map_info *map);
 int				init_map_array(t_map_info *map, int height, int width);
 int				is_map_desc(char *line);
 unsigned int	ft_strlen_wnl(char *str);
+char			*ft_strdup_wnl(const char *s1);
 void			debug_print_map(t_map_info *map);
 double			normalize_angle(double rad_angle);
 
