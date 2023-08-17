@@ -6,7 +6,7 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:38:49 by svanmeen          #+#    #+#             */
-/*   Updated: 2023/08/17 10:33:45 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/08/17 10:36:52 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	fill(t_map *map, char **raw, int width)
 				{
 					map[k].x = i;
 					map[k].y = j;
-					map[k].val = ' ';
+					map[k].val = ' ' - 48;
 					k++;
 					j++;
 				}
@@ -67,7 +67,7 @@ void	fill(t_map *map, char **raw, int width)
 			{
 			map[k].x = i;
 			map[k].y = j;
-			map[k].val = raw[i][j];
+			map[k].val = raw[i][j] - 48;
 			k++;
 			j++;
 			}
