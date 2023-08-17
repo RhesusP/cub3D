@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 16:35:53 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/10 18:08:49 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/17 17:43:17 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	draw_minimap(t_map_info *map, t_mlx_data *img)
 {
 	int		i;
 	int		j;
-	t_point	end_line;
+	t_point	hit_point;
 
 	i = 0;
 	while (map->map[i])
@@ -63,12 +63,23 @@ void	draw_minimap(t_map_info *map, t_mlx_data *img)
 			if (map->map[i][j] == '1')
 				trace_wall(img, j * MINI_SIZE, i * MINI_SIZE, \
 				0x00FFFFFF);
+			else
+				trace_wall(img, j * MINI_SIZE, i * MINI_SIZE, \
+				0x00000000);
 			j++;
 		}
 		i++;
 	}
 	put_player(img, map->player.mini_pos.x, map->player.mini_pos.y, 0x00FF0000);
-	end_line.x = map->player.mini_pos.x + cos(map->player.dir) * 16;
-	end_line.y = map->player.mini_pos.y + sin(map->player.dir) * 16;
-	ft_draw_line(img, map->player.mini_pos, end_line, 0x00FFFF00);
+	i = 0;
+	while (i < WIDTH)
+	{
+		if (i % 2)
+		{
+			hit_point.x = (map->frame[i].point.x / CUBE_SIZE) * MINI_SIZE;
+			hit_point.y = (map->frame[i].point.y / CUBE_SIZE) * MINI_SIZE;
+			ft_draw_line(&map->mlx_img, map->player.mini_pos, hit_point, 0x0000FF00);
+		}
+		i++;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 11:12:48 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/16 20:20:03 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/17 17:40:24 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ double	normalize_angle2(double angle)
 
 t_point	cast_single_ray(t_map_info *map, double ray_angle, t_frame *frame)
 {
-	t_point	hit_point;
 	double two_pi = 2 * M_PI;
 	
 	ray_angle = fmod(ray_angle, two_pi);
@@ -109,13 +108,6 @@ t_point	cast_single_ray(t_map_info *map, double ray_angle, t_frame *frame)
         x += delta_x;
         y += delta_y;
     }
-	// Draw minimap rays
-	if (dist)
-	{
-		hit_point.x = (x_hit / CUBE_SIZE) * MINI_SIZE;
-		hit_point.y = (y_hit / CUBE_SIZE) * MINI_SIZE;
-		ft_draw_line(&map->mlx_img, map->player.mini_pos, hit_point, 0x0000FF00);
-	}
 	t_point	res;
 	res.x = x_hit;
 	res.y = y_hit;
