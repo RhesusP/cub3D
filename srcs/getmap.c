@@ -6,7 +6,7 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:38:49 by svanmeen          #+#    #+#             */
-/*   Updated: 2023/08/15 20:37:37 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/08/17 10:33:45 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,7 @@ char	**strscat(char **strs, char *str)
 	return (new);
 }
 
-int	ft_getcaracters(char **strs)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (strs[i])
-	{
-		j = 0;
-		while (strs[i][j])
-			j++;
-		i++;
-	}
-	return (j - i);
-}
-
-void	fill(t_map *map, char **raw)
+void	fill(t_map *map, char **raw, int width)
 {
 	int	i;
 	int	j;
@@ -67,13 +50,27 @@ void	fill(t_map *map, char **raw)
 	while (raw[i])
 	{
 		j = 0;
-		while (raw[i][j + 1])
+		while (raw[i][j])
 		{
+			if (raw[i][j] == '\n')
+			{
+				while (j != width)
+				{
+					map[k].x = i;
+					map[k].y = j;
+					map[k].val = ' ';
+					k++;
+					j++;
+				}
+			}
+			else
+			{
 			map[k].x = i;
 			map[k].y = j;
-			map[k].val = raw[i][j] - 48;
+			map[k].val = raw[i][j];
 			k++;
 			j++;
+			}
 		}
 		i++;
 	}
@@ -82,12 +79,42 @@ void	fill(t_map *map, char **raw)
 	map[k].val = -1;
 }
 
-t_map	*get_raw_map(int fd)
+int	get_width(char **raw)
+{
+	int	i;
+	int	j;
+	int	width;
+
+	i = 0;
+	width = 0;
+	while (raw[i])
+	{
+		j = 0;
+		while (raw[i][j])
+			j++;
+		if (j > width)
+			width = j;
+		i++;
+	}
+	return (width);
+}
+
+int	get_heigh(char **raw)
+{
+	int	i;
+
+	i = 0;
+	while (raw[i])
+		i++;
+	return (i);
+}
+
+t_map	*get_raw_map(int fd, t_rsc *rsc)
 {
 	t_map	*map;
 	char	**raw;
 	char	*line;
-	int		nb_pts;
+//	int		nb_pts;
 
 	raw = init_strs();
 	(void)map;
@@ -98,11 +125,12 @@ t_map	*get_raw_map(int fd)
 		free(line);
 		line = get_next_data(fd);
 	}
-	nb_pts = ft_getcaracters(raw);
-	map = malloc(sizeof(t_map) * nb_pts + 1);
+	rsc->settings->map_width = get_width(raw);
+	rsc->settings->map_heigh = get_heigh(raw);
+	map = malloc(sizeof(t_map) * (get_heigh(raw) * get_width(raw) + 1));
 	if (!map)
 		return (NULL);
-	fill(map, raw);
+	fill(map, raw, rsc->settings->map_width);
 	free(raw);
 	return (map);
 }

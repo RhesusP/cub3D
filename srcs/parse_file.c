@@ -6,7 +6,7 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 21:24:17 by svanmeen          #+#    #+#             */
-/*   Updated: 2023/08/15 21:34:33 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/08/17 10:35:38 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,8 @@ t_settings	*init_settings(void)
 	settings->east_texture = NULL;
 	settings->west_texture = NULL;
 	settings->sprite_texture = NULL;
+	settings->map_heigh = 0;
+	settings->map_width = 0;
 	return (settings);
 }
 
@@ -162,7 +164,10 @@ void	print_raw(t_map *raw)
 	i = 0;
 	while (raw[i].val != -1)
 	{
-		ft_printf("x: %d, y: %d, val: %d\n", raw[i].x, raw[i].y, raw[i].val);
+		ft_printf("%c", raw[i].val);
+		if (raw[i + 1].x != raw[i].x)
+			ft_printf("\n");
+		//ft_printf("x: %d, y: %d, val: %d\n", raw[i].x, raw[i].y, raw[i].val);
 		i++;
 	}
 }
@@ -177,10 +182,9 @@ t_rsc	*parse_file(int fd)
 		return (NULL);
 	if (get_settings(fd, rsc->settings) == 1)
 		return (NULL);
-	raw = get_raw_map(fd);
+	raw = get_raw_map(fd, rsc);
 	if (!raw)
 		return (NULL);
-	if (check_walls(raw))
-		return (NULL);
+	print_raw(raw);
 	return (rsc);
 }
