@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 16:34:14 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/17 11:45:29 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/17 15:59:06 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 void	ft_mlx_pixel_put(t_mlx_data *data, int x, int y, int color)
 {
 	char	*dst;
-
+	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
+		return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
@@ -50,7 +51,7 @@ void	draw_texture_col(t_map_info *map, t_frame frame, int x, int offset)
 	float	scale;
 	int		texture_x_offset;
 	t_text	*texture;
-	double	text_y;
+	float	text_y;
 	int		texture_y;
 	int 	y;
 	int		color;
@@ -62,6 +63,8 @@ void	draw_texture_col(t_map_info *map, t_frame frame, int x, int offset)
 	else
 		texture_x_offset = frame.point.x % CUBE_SIZE;
 	text_y = 0;
+	if (frame.height > HEIGHT)
+        text_y = ((frame.height - HEIGHT) / 2) * scale;
 	y = 0;
 	while (y < frame.height)
 	{
@@ -78,18 +81,9 @@ void	draw_slice(t_map_info *map, t_mlx_data *img, int index)
 	int	i;
 	int	y_offset;
 	i = 0;
-	if (map->frame[index].height >= HEIGHT)
-	{
-		while (i < HEIGHT)
-		{
-			ft_mlx_pixel_put(img, index, i, get_wall_color(map->frame[index]));
-			i++;
-		}
-		return ;
-	}
 	y_offset = (HEIGHT - map->frame[index].height) / 2;
 	if (y_offset < 0)
-		return ;
+		y_offset = 0;
 	// draw ceil
 	while (i < y_offset)
 	{

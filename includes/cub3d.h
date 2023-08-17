@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:34:21 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/17 11:44:26 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/17 15:28:28 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # define PROJECTION_DISTANCE 1108
 # define HEIGHT 720
 # define WIDTH 1280
-# define SPEED 6.0
-# define ROT_SPEED 0.04
+# define SPEED 10.0
+# define ROT_SPEED 0.06
 
 # define LEFT_ARROW 123
 # define RIGHT_ARROW 124
