@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 12:24:29 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/18 12:25:47 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/18 13:40:54 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,19 @@ int	key_hook(int keycode, t_map_info *map)
 	return (0);
 }
 
+int	free_map(t_map_info *map)
+{
+	printf("need to free map\n");
+	(void)map;
+	exit(EXIT_SUCCESS);
+	return (0);
+}
+
 void	start_mlx(t_map_info *map)
 {
-	// map->mlx = mlx_init();
 	mlx_do_key_autorepeaton(map->mlx);
-	// if (!map->mlx)
-	// 	print_error("mlx_init() failed\n", 0, EXIT_FAILURE);
-	// map->mlx_win = mlx_new_window(map->mlx, WIDTH, HEIGHT, "cub3D");
 	mlx_hook(map->mlx_win, 2, 1L << 0, key_hook, map);
+	mlx_hook(map->mlx_win, 17, (1L << 2), free_map, map);
 	draw_frame(map);
 	mlx_loop(map->mlx);
 }
