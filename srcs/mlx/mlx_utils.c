@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 12:24:29 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/16 22:52:07 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/18 12:25:47 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	load_texture(t_map_info *map, t_text *texture, char *path)
 {
-	printf("path is: |%s|\n", path);
 	texture->img = mlx_xpm_file_to_image(map->mlx, path, &texture->width, &texture->height);
 	if (!texture->img)
 	{

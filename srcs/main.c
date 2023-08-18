@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:25:31 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/16 12:32:03 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/18 13:13:57 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,15 @@ int	main(int argc, char **argv)
 	t_map_info	map;
 
 	if (argc != 2)
-		return (print_error("Wrong number of arguments\n", 0, EXIT_FAILURE));
+		return (print_error("Usage: ./cub3D path_to_map\n", 0, EXIT_FAILURE));
 	if (!is_file_extension_correct(argv[1]))
 		return (print_error("Wrong file extension\n", 0, EXIT_FAILURE));
 	map.mlx = mlx_init();
 	if (!map.mlx)
 		print_error("mlx_init() failed\n", 0, EXIT_FAILURE);
 	map.mlx_win = mlx_new_window(map.mlx, WIDTH, HEIGHT, "cub3D");
+	if (!map.mlx_win)
+		print_error("mlx_new_window() failed\n", 0, EXIT_FAILURE);
 	if (!parse_map(argv[1], &map))
 		return (EXIT_FAILURE);
 	start_mlx(&map);

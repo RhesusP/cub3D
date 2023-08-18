@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 09:32:29 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/16 22:28:31 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/18 12:22:52 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,16 @@ int	add_no_texture(char *line, t_map_info *map)
 	i = 2;
 	while (line[i] == ' ')
 		i++;
-	path = ft_strdup_wnl(&line[i]);
-	load_texture(map, map->no_texture, path);
+	path = ft_strdup_wnls(&line[i]);
+	if (!load_texture(map, map->no_texture, path))
+		return (0);
 	free(path);
 	return (1);
 }
 
 int	add_so_texture(char *line, t_map_info *map)
 {
-	int	i;
+	int		i;
 	char	*path;
 
 	if (map->so_texture->img)
@@ -38,15 +39,16 @@ int	add_so_texture(char *line, t_map_info *map)
 	i = 2;
 	while (line[i] == ' ')
 		i++;
-	path = ft_strdup_wnl(&line[i]);
-	load_texture(map, map->so_texture, path);
+	path = ft_strdup_wnls(&line[i]);
+	if (!load_texture(map, map->so_texture, path))
+		return (0);
 	free(path);
 	return (1);
 }
 
 int	add_ea_texture(char *line, t_map_info *map)
 {
-	int	i;
+	int		i;
 	char	*path;
 
 	if (map->ea_texture->img)
@@ -54,15 +56,16 @@ int	add_ea_texture(char *line, t_map_info *map)
 	i = 2;
 	while (line[i] == ' ')
 		i++;
-	path = ft_strdup_wnl(&line[i]);
-	load_texture(map, map->ea_texture, path);
+	path = ft_strdup_wnls(&line[i]);
+	if (!load_texture(map, map->ea_texture, path))
+		return (0);
 	free(path);
 	return (1);
 }
 
 int	add_we_texture(char *line, t_map_info *map)
 {
-	int	i;
+	int		i;
 	char	*path;
 
 	if (map->we_texture->img)
@@ -70,8 +73,9 @@ int	add_we_texture(char *line, t_map_info *map)
 	i = 2;
 	while (line[i] == ' ')
 		i++;
-	path = ft_strdup_wnl(&line[i]);
-	load_texture(map, map->we_texture, path);
+	path = ft_strdup_wnls(&line[i]);
+	if (!load_texture(map, map->we_texture, path))
+		return (0);
 	free(path);
 	return (1);
 }

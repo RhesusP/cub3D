@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:34:21 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/17 15:28:28 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/18 12:19:33 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,6 @@ typedef struct	s_point
 	int	x;
 	int	y;
 }	t_point;
-
-typedef struct	s_wall
-{
-	t_point	p;
-	double	dist;
-}	t_wall;
 
 typedef struct	s_mlx_data
 {
@@ -145,15 +139,18 @@ void	draw_frame(t_map_info *map);
 /* -------- UTILS --------*/
 int				print_error(char *str, int use_perror, int exit_status);
 int				is_file_extension_correct(char *filename);
-void			init_void_map(t_map_info *map);
+int				init_void_map(t_map_info *map);
 int				init_map_array(t_map_info *map, int height, int width);
 int				is_map_desc(char *line);
 unsigned int	ft_strlen_wnl(char *str);
-char			*ft_strdup_wnl(const char *s1);
+char			*ft_strdup_wnls(const char *s1);
 void			debug_print_map(t_map_info *map);
 double			normalize_angle(double rad_angle);
 
 /* -------- BONUS --------*/
 void			draw_minimap(t_map_info *map, t_mlx_data *img);
+
+void	debug_print_map_fields(t_map_info *map);
+int	is_desc_char_valid(char c);
 
 #endif

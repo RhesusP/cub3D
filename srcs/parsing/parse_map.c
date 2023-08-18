@@ -6,39 +6,102 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 09:15:19 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/16 12:32:52 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/18 13:18:57 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/cub3d.h"
 
-void	get_line(char *line, t_map_info *map)
+int	text_col_complete(t_map_info *map)
+{
+	if (map->floor_color < 0 || map->ceiling_color < 0)
+		return (0);
+	if (!map->no_texture->img || !map->so_texture->img || !map->ea_texture->img || !map->we_texture->img)
+		return (0);
+	return (1);
+}
+
+int	get_line(char *line, t_map_info *map)
 {
 	static int	max_width = 0;
 	static int	height = 0;
 
 	if (!line || line[0] == '\0' || line[0] == '\n')
-		return ;
+		return (1);
 	if (ft_strncmp(line, "NO ", 3) == 0)
-		add_no_texture(line, map);
-	else if (ft_strncmp(line, "SO ", 3) == 0)
-		add_so_texture(line, map);
-	else if (ft_strncmp(line, "WE ", 3) == 0)
-		add_we_texture(line, map);
-	else if (ft_strncmp(line, "EA ", 3) == 0)
-		add_ea_texture(line, map);
-	else if (ft_strncmp(line, "F ", 2) == 0)
-		add_floor_color(line, map);
-	else if (ft_strncmp(line, "C ", 2) == 0)
-		add_ceiling_color(line, map);
-	else
 	{
+		if (!add_no_texture(line, map))
+			return (0);
+		return (1);
+	}
+	else if (ft_strncmp(line, "SO ", 3) == 0)
+	{
+		if (!add_so_texture(line, map))
+			return (0);
+		return(1);
+	}
+	else if (ft_strncmp(line, "WE ", 3) == 0)
+	{
+		if (!add_we_texture(line, map))
+			return (0);
+		return (1);
+	}
+	else if (ft_strncmp(line, "EA ", 3) == 0)
+	{
+		if (!add_ea_texture(line, map))
+			return (0);
+		return (1);
+	}
+	else if (ft_strncmp(line, "F ", 2) == 0)
+	{
+		if (!add_floor_color(line, map))
+			return (0);
+		return (1);
+	}
+	else if (ft_strncmp(line, "C ", 2) == 0)
+	{
+		if (!add_ceiling_color(line, map))
+			return (0);
+		return (1);
+	}
+	else if (text_col_complete(map) && is_desc_char_valid(line[0]))
+	{
+		// TODO precise error "map is not last"
 		height++;
 		if ((int)ft_strlen_wnl(line) > max_width)
 			max_width = ft_strlen_wnl(line);
 	}
+	else
+		return (print_error("invalid character found in map\n", 0, 0));
 	map->map_height = height;
 	map->map_width = max_width;
+	return (1);
+}
+
+int	map_have_one_player(char **map)
+{
+	int	i;
+	int	j;
+	int	player_detected;
+
+	player_detected = 0;
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[j])
+		{
+			if (!player_detected && (map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'E' || map[i][j] == 'W'))
+				player_detected = 1;
+			else if (player_detected && (map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'E' || map[i][j] == 'W'))
+				return print_error("multiple players in map description\n", 0, 0);
+			j++;
+		}
+		i++;
+	}
+	if (!player_detected)
+		return (print_error("no player specified in map description\n", 0, 0));
+	return (1);
 }
 
 int	fill_map_row(char *line, t_map_info *map, int row)
@@ -81,7 +144,10 @@ int	fill_map_array(char *map_path, t_map_info *map)
 		if (is_map_desc(line))
 		{
 			if (!fill_map_row(line, map, i))
+			{
+				printf("fill return 0\n");
 				return (0);
+			}
 			i++;
 		}
 		free(line);
@@ -97,19 +163,23 @@ int	parse_map(char *map_path, t_map_info *map)
 
 	fd = open(map_path, O_RDONLY);
 	if (fd == -1)
-		print_error("", 1, 0);
-	init_void_map(map);
+		return (print_error("unable to open map\n", 0, 0));
+	if (!init_void_map(map))
+		return (0);
 	line = "";
 	while (line)
 	{
 		line = get_next_line(fd);
-		get_line(line, map);
+		if (!get_line(line, map))
+			return (0);
 		free(line);
 	}
-	init_map_array(map, map->map_height, map->map_width);
 	close(fd);
+	debug_print_map_fields(map);
+	init_map_array(map, map->map_height, map->map_width);
 	fill_map_array(map_path, map);
+	if (!map_have_one_player(map->map))
+		return (0);
 	get_start_pos(map);
-	// debug_print_map(map);
 	return (1);
 }

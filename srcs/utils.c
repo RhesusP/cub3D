@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 09:33:38 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/16 12:41:57 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/18 12:20:20 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,21 @@ unsigned int	ft_strlen_wnl(char *str)
 	return (i);
 }
 
-char	*ft_strdup_wnl(const char *s1)
+// without consedering ending \n \0 and ' '
+char	*ft_strdup_wnls(const char *s1)
 {
 	char			*res;
 	unsigned int	i;
+	unsigned int	j;
 
-	res = malloc(sizeof(char) * (ft_strlen(s1) + 1));
+	j = ft_strlen(s1);
+	while (j >= 0 && (s1[j] == '\0' || s1[j] == '\n' || s1[j] == ' '))
+		j--;
+	res = malloc(sizeof(char) * (j + 1));
 	if (!res)
 		return (res);
 	i = 0;
-	while (s1[i] != '\0' && s1[i] != '\n')
+	while (i < j + 1)
 	{
 		res[i] = s1[i];
 		i++;
