@@ -6,7 +6,7 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 21:24:17 by svanmeen          #+#    #+#             */
-/*   Updated: 2023/08/17 10:35:38 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/08/22 16:51:04 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ t_settings	*init_settings(void)
 	settings->sprite_texture = NULL;
 	settings->map_heigh = 0;
 	settings->map_width = 0;
+	settings->origin = 0;
 	return (settings);
 }
 
@@ -185,6 +186,7 @@ t_rsc	*parse_file(int fd)
 	raw = get_raw_map(fd, rsc);
 	if (!raw)
 		return (NULL);
-	print_raw(raw);
+	if (backtrack(rsc->settings, raw))
+		return (0);
 	return (rsc);
 }

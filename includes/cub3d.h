@@ -6,7 +6,7 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:34:21 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/17 10:12:29 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/08/22 16:51:09 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_settings
 	char	*sprite_texture;
 	int		map_heigh;
 	int		map_width;
+	int		origin;
 }				t_settings;
 
 typedef struct s_rsc
@@ -46,5 +47,6 @@ t_map	*get_raw_map(int fd, t_rsc *rsc);
 char	*get_next_data(int fd);
 int	ft_strslen(char **strs);
 int	check_walls(t_map *map);
+int	backtrack(t_settings *set, t_map *map);
 
 #endif
