@@ -6,12 +6,25 @@
 
 - [x] Vérifier le nombre d'argument
 - [x] Vérifier l'extension `.cub`
-- [ ] Lancer une erreur si le chemin passé en paramètre est un répertoire
+- [x] Lancer une erreur si le chemin passé en paramètre est un répertoire
 - [x] La carte doit posséder uniquement ces caractères: des 1 et des 0 et **exactement un seul** caractère parmis N S E et W.
-- [ ] Ne pas ajouter le `\n` a la fin du chemin des textures
-- [ ] Ajouter le atoi de `push_swap`
+- [x] Ne pas ajouter le `\n` a la fin du chemin des textures
+- [x] Ajouter le atoi de `push_swap`
 - [ ] La carte doit être fermée / entourée de murs
 
+### Linux key mapping
+
+| Key | Keycode |
+|-----|---------|
+| `w` | `119` |
+| `a` | `97` |
+| `s` | `115` |
+| `d` | `100` |
+| `z` | `122` |
+| `q` | `113` |
+| `esc` | `65307` |
+| ⬅️ | `65363` |
+| ➡️ | `65361` |
 
 ### Composition de la carte
 

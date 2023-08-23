@@ -6,7 +6,7 @@
 #    By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/08/16 12:18:29 by cbernot          ###   ########.fr        #
+#    Updated: 2023/08/23 12:57:24 by cbernot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRCS	=	./srcs/main.c \
 			./srcs/utils.c \
 			./srcs/movement.c
 
-MINILIBX_DIR	=	minilibx_opengl/
+MINILIBX_DIR	=	minilibx-linux/
 MINILIBX_NAME	=	libmlx.a
 MINILIBX		=	$(addprefix $(MINILIBX_DIR), $(MINILIBX_NAME))			
 
@@ -42,7 +42,7 @@ DIR_FLAG	=	--no-print-directory
 	cc ${FLAGS} -I ${INCLUDES} -c $< -o $@
 
 ${NAME}: ${OBJS} ${LIBFT} ${MINILIBX} ./includes/cub3d.h
-	cc ${OBJS} -L ./minilibx_opengl -l mlx -framework OpenGL -framework AppKit -L ./libft -lft -o ${NAME}
+	cc ${OBJS} -L ${MINILIBX_DIR} -lmlx -lXext -lX11 -L ./libft -lft -lm -o ${NAME}
 
 all: ${NAME}
 
@@ -50,10 +50,10 @@ libft:
 	@make -C ${LIBFT_DIR}
 
 minilibx:
-	@make -C ./minilibx_opengl
+	@make -C ${MINILIBX_DIR}
 
 clean:
-	make ${DIR_FLAG} clean -C ./minilibx_opengl
+	make ${DIR_FLAG} clean -C ${MINILIBX_DIR}
 	make ${DIR_FLAG} clean -C ./libft
 	rm -f ${OBJS}
 

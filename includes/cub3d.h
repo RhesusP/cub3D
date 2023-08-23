@@ -6,14 +6,14 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:34:21 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/18 12:19:33 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/23 13:14:49 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 # include "./../libft/libft.h"
-# include "./../minilibx_opengl/mlx.h"
+# include "./../minilibx-linux/mlx.h"
 # include <stdio.h>
 # include <math.h>
 
@@ -28,13 +28,13 @@
 # define SPEED 10.0
 # define ROT_SPEED 0.06
 
-# define LEFT_ARROW 123
-# define RIGHT_ARROW 124
-# define FORWARD 13
-# define BACKWARD 1
-# define LEFT 0
-# define RIGHT 2
-# define ESC 53
+# define LEFT_ARROW 65361
+# define RIGHT_ARROW 65363
+# define FORWARD 122
+# define BACKWARD 115
+# define LEFT 113
+# define RIGHT 100
+# define ESC 65307
 
 enum e_side
 {
