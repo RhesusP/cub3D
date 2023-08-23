@@ -6,14 +6,14 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:34:21 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/18 12:19:33 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/23 12:09:20 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 # include "./../libft/libft.h"
-# include "./../minilibx_opengl/mlx.h"
+# include "./../minilibx-linux/mlx.h"
 # include <stdio.h>
 # include <math.h>
 
