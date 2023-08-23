@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 12:24:29 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/18 13:40:54 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/23 13:26:26 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	key_hook(int keycode, t_map_info *map)
 		move_left(map);
 	else if (keycode == RIGHT)
 		move_right(map);
-	if (keycode == 53)
+	if (keycode == ESC)
 		exit(EXIT_SUCCESS);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 09:32:29 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/18 12:22:52 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/23 13:01:38 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	add_no_texture(char *line, t_map_info *map)
 	int		i;
 	char	*path;
 
-	if (map->no_texture->img)
+	if (map->no_texture->addr)
 		return (print_error("double definition of a texture (NO)\n", 0, 0));
 	i = 2;
 	while (line[i] == ' ')
@@ -34,7 +34,7 @@ int	add_so_texture(char *line, t_map_info *map)
 	int		i;
 	char	*path;
 
-	if (map->so_texture->img)
+	if (map->so_texture->addr)
 		return (print_error("double definition of a texture (SO)\n", 0, 0));
 	i = 2;
 	while (line[i] == ' ')
@@ -51,7 +51,7 @@ int	add_ea_texture(char *line, t_map_info *map)
 	int		i;
 	char	*path;
 
-	if (map->ea_texture->img)
+	if (map->ea_texture->addr)
 		return (print_error("double definition of a texture (EA)\n", 0, 0));
 	i = 2;
 	while (line[i] == ' ')
@@ -68,7 +68,7 @@ int	add_we_texture(char *line, t_map_info *map)
 	int		i;
 	char	*path;
 
-	if (map->we_texture->img)
+	if (map->we_texture->addr)
 		return (print_error("double definition of a texture (WE)\n", 0, 0));
 	i = 2;
 	while (line[i] == ' ')
