@@ -6,7 +6,7 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:38:49 by svanmeen          #+#    #+#             */
-/*   Updated: 2023/08/22 17:53:17 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/08/23 15:34:09 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,6 @@ t_map	*get_raw_map(int fd, t_rsc *rsc)
 	}
 	rsc->settings->map_width = get_width(raw);
 	rsc->settings->map_heigh = get_heigh(raw);
-	ft_printf("width: %d\n", rsc->settings->map_width);
-	ft_printf("heigh: %d\n", rsc->settings->map_heigh);
 	map = malloc(sizeof(t_map) * (get_heigh(raw) * get_width(raw) + 1));
 	if (!map)
 		return (NULL);

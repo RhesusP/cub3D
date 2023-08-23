@@ -6,7 +6,7 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:34:21 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/22 16:51:09 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/08/23 15:33:32 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,14 @@ typedef struct s_rsc
 t_rsc	*parse_file(int fd);
 t_map	*get_raw_map(int fd, t_rsc *rsc);
 char	*get_next_data(int fd);
-int	ft_strslen(char **strs);
-int	check_walls(t_map *map);
-int	backtrack(t_settings *set, t_map *map);
+int		ft_strslen(char **strs);
+int		check_walls(t_map *map);
+int		backtrack(t_settings *set, t_map *map);
+int		track(t_map *map, int i, t_settings *set, int old, int *k);
+int		border(t_map *map, int i, t_settings *set, int old);
+int		get_nb_wall(t_map *map, int i, t_settings *set);
+int		get_next(t_map *map, int i, t_settings *set, int from);
+int		charset(t_map map);
+int		ft_abs(int nb);
 
 #endif
