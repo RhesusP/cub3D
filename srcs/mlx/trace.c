@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 16:34:14 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/17 17:18:40 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/23 20:05:00 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	draw_texture_col(t_map_info *map, t_frame frame, int x, int offset)
 
 	texture = get_texture(map, frame.wall_face);
 	scale = texture->height / frame.height;
+	
 	if (frame.axis == 1)
 		texture_x_offset = frame.point.y % CUBE_SIZE;
 	else
@@ -76,12 +77,12 @@ void	draw_texture_col(t_map_info *map, t_frame frame, int x, int offset)
 	}
 }
 
-void	draw_slice(t_map_info *map, t_mlx_data *img, int index)
+void	draw_slice(t_map_info *map, t_mlx_data *img, t_frame frame, int index)
 {
 	int	i;
 	int	y_offset;
 	i = 0;
-	y_offset = (HEIGHT - map->frame[index].height) / 2;
+	y_offset = (HEIGHT - frame.height) / 2;
 	if (y_offset < 0)
 		y_offset = 0;
 	// draw ceil
@@ -91,8 +92,8 @@ void	draw_slice(t_map_info *map, t_mlx_data *img, int index)
 		i++;
 	}
 	// draw wall
-	draw_texture_col(map, map->frame[index], index, i);
-	i = map->frame[index].height + y_offset;
+	draw_texture_col(map, frame, index, i);
+	i = frame.height + y_offset;
 	while (i < HEIGHT)
 	{
 		ft_mlx_pixel_put(img, index, i, map->floor_color);

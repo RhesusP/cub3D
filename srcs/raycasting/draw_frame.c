@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 11:12:48 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/17 17:40:24 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/23 20:12:33 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,6 @@ double	normalize_angle(double rad_angle)
 	return (rad_angle);
 }
 
-double	normalize_angle2(double angle)
-{
-	double two_pi = 2 * M_PI;
-	angle = fmod(angle, two_pi);
-	if (angle < 0)
-		angle += two_pi;
-	return (angle);
-
-}
-
 t_point	cast_single_ray(t_map_info *map, double ray_angle, t_frame *frame)
 {
 	double two_pi = 2 * M_PI;
@@ -48,7 +38,7 @@ t_point	cast_single_ray(t_map_info *map, double ray_angle, t_frame *frame)
     double dist = 0;
     double x_hit = 0;
     double y_hit = 0;
-	t_point	check;
+	// t_point	check;
 
     double wall_x;
     double wall_y;
@@ -72,6 +62,14 @@ t_point	cast_single_ray(t_map_info *map, double ray_angle, t_frame *frame)
             x_hit = x;
             y_hit = y;
 			frame->axis = 1;
+
+
+			if (right) {
+				frame->wall_face = WEST; // Change this to EAST
+			} else {
+				frame->wall_face = EAST; // Change this to WEST
+			}
+			
             break;
         }
         x += delta_x;
@@ -94,15 +92,21 @@ t_point	cast_single_ray(t_map_info *map, double ray_angle, t_frame *frame)
                 dist = block_dist;
                 x_hit = x;
                 y_hit = y;
-				check.x = 0;
-				check.y = delta_y;
+				// check.x = 0;
+				// check.y = delta_y;
 				frame->axis = 0;
+
+				if (up) {
+					frame->wall_face = SOUTH;
+				} else {
+					frame->wall_face = NORTH;
+				}
             }
-			else
-			{
-				check.x = right ? 1 : -1;
-				check.y = 0;
-			}
+			// else
+			// {
+			// 	check.x = right ? 1 : -1;
+			// 	check.y = 0;
+			// }
             break;
         }
         x += delta_x;
@@ -113,14 +117,14 @@ t_point	cast_single_ray(t_map_info *map, double ray_angle, t_frame *frame)
 	res.y = y_hit;
 
 	// get the wall face orientation hit by the ray
-	if (check.x == 1)
-		frame->wall_face = WEST;
-	else if (check.x == -1)
-		frame->wall_face = EAST;
-	else if (check.y == 1)
-		frame->wall_face = NORTH;
-	else
-		frame->wall_face = SOUTH;
+	// if (check.x == 1)
+	// 	frame->wall_face = WEST;
+	// else if (check.x == -1)
+	// 	frame->wall_face = EAST;
+	// else if (check.y == 1)
+	// 	frame->wall_face = NORTH;
+	// else
+	// 	frame->wall_face = SOUTH;
 	return (res);
 }
 
@@ -134,16 +138,17 @@ void	cast_rays(t_map_info *map)
 	double	fishbowl_corr;
 
 	i = 0;
-	map->frame = malloc(sizeof(t_frame) * WIDTH);
+	map->frame = malloc(sizeof(t_frame) * NB_RAYS);
 	if (!map->frame)
 	{
 		print_error("malloc failed", 1, 0);
 		return;
 	}
-	angle_increment = (60.0 / WIDTH) * M_PI / 180.0;
+	angle_increment = (60.0 / NB_RAYS) * M_PI / 180.0;
 	ray_orientation = map->player.dir - (HALF_FOV * M_PI / 180.0);
 	ray_orientation = normalize_angle(ray_orientation);
-	while (i < WIDTH)
+	printf("ray casting\n");
+	while (i < NB_RAYS)
 	{
 		map->frame[i].point = cast_single_ray(map, ray_orientation, &map->frame[i]);
 		fishbowl_corr = cos(normalize_angle(ray_orientation - map->player.dir));
@@ -155,10 +160,14 @@ void	cast_rays(t_map_info *map)
 		i++;
 	}
 	i = 0;
-	while (i < WIDTH)
+	printf("rendering\n");
+	while (i < NB_RAYS)
 	{
 		if (map->frame[i].distance > 0)
-			draw_slice(map, &map->mlx_img, i);
+		{
+			draw_slice(map, &map->mlx_img, map->frame[i], 2 * i);
+			draw_slice(map, &map->mlx_img, map->frame[i], 2 * i + 1);
+		}
 		i++;
 	}
 }

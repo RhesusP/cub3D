@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 12:09:38 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/10 15:46:59 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/23 20:38:36 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	move_forward(t_map_info *map)
 	double	new_x;
 	double	new_y;
 
-	mlx_clear_window(map->mlx, map->mlx_win);
 	mlx_destroy_image(map->mlx, map->mlx_img.img);
 	new_x = map->player.map_pos.x + cos(map->player.dir) * map->player.speed;
 	new_y = map->player.map_pos.y + sin(map->player.dir) * map->player.speed;
@@ -54,7 +53,6 @@ void	move_backward(t_map_info *map)
 	double	new_x;
 	double	new_y;
 
-	mlx_clear_window(map->mlx, map->mlx_win);
 	mlx_destroy_image(map->mlx, map->mlx_img.img);
 	new_x = map->player.map_pos.x - cos(map->player.dir) * map->player.speed;
 	new_y = map->player.map_pos.y - sin(map->player.dir) * map->player.speed;
@@ -75,7 +73,6 @@ void	move_left(t_map_info *map)
 	double	speed;
 
 	speed = map->player.speed;
-	mlx_clear_window(map->mlx, map->mlx_win);
 	mlx_destroy_image(map->mlx, map->mlx_img.img);
 	new_x = map->player.map_pos.x - cos(map->player.dir + M_PI_2) * speed;
 	new_y = map->player.map_pos.y - sin(map->player.dir + M_PI_2) * speed;
@@ -96,7 +93,6 @@ void	move_right(t_map_info *map)
 	double	speed;
 
 	speed = map->player.speed;
-	mlx_clear_window(map->mlx, map->mlx_win);
 	mlx_destroy_image(map->mlx, map->mlx_img.img);
 	new_x = map->player.map_pos.x + cos(map->player.dir + M_PI_2) * speed;
 	new_y = map->player.map_pos.y + sin(map->player.dir + M_PI_2) * speed;

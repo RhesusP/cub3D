@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:34:21 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/23 13:14:49 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/23 20:04:54 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define PROJECTION_DISTANCE 1108
 # define HEIGHT 720
 # define WIDTH 1280
+# define NB_RAYS 640
 # define SPEED 10.0
 # define ROT_SPEED 0.06
 
@@ -119,7 +120,7 @@ void			get_start_pos(t_map_info *map);
 
 /* --------- MLX  --------*/
 void			start_mlx(t_map_info *map);
-void			draw_slice(t_map_info *map, t_mlx_data *img, int index);
+void			draw_slice(t_map_info *map, t_mlx_data *img, t_frame frame, int index);
 void			ft_mlx_pixel_put(t_mlx_data *data, int x, int y, int color);
 void			ft_draw_line(t_mlx_data *img, t_point p1, t_point p2, int col);
 int				create_mlx_color(int t, int r, int g, int b);
