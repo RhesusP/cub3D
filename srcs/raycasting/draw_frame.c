@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 11:12:48 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/23 20:12:33 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/23 21:44:48 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,6 @@ t_point	cast_single_ray(t_map_info *map, double ray_angle, t_frame *frame)
                 dist = block_dist;
                 x_hit = x;
                 y_hit = y;
-				// check.x = 0;
-				// check.y = delta_y;
 				frame->axis = 0;
 
 				if (up) {
@@ -102,11 +100,6 @@ t_point	cast_single_ray(t_map_info *map, double ray_angle, t_frame *frame)
 					frame->wall_face = NORTH;
 				}
             }
-			// else
-			// {
-			// 	check.x = right ? 1 : -1;
-			// 	check.y = 0;
-			// }
             break;
         }
         x += delta_x;
@@ -115,16 +108,6 @@ t_point	cast_single_ray(t_map_info *map, double ray_angle, t_frame *frame)
 	t_point	res;
 	res.x = x_hit;
 	res.y = y_hit;
-
-	// get the wall face orientation hit by the ray
-	// if (check.x == 1)
-	// 	frame->wall_face = WEST;
-	// else if (check.x == -1)
-	// 	frame->wall_face = EAST;
-	// else if (check.y == 1)
-	// 	frame->wall_face = NORTH;
-	// else
-	// 	frame->wall_face = SOUTH;
 	return (res);
 }
 
@@ -138,6 +121,8 @@ void	cast_rays(t_map_info *map)
 	double	fishbowl_corr;
 
 	i = 0;
+	if (map->frame)
+		free(map->frame);
 	map->frame = malloc(sizeof(t_frame) * NB_RAYS);
 	if (!map->frame)
 	{
@@ -147,7 +132,6 @@ void	cast_rays(t_map_info *map)
 	angle_increment = (60.0 / NB_RAYS) * M_PI / 180.0;
 	ray_orientation = map->player.dir - (HALF_FOV * M_PI / 180.0);
 	ray_orientation = normalize_angle(ray_orientation);
-	printf("ray casting\n");
 	while (i < NB_RAYS)
 	{
 		map->frame[i].point = cast_single_ray(map, ray_orientation, &map->frame[i]);
@@ -160,7 +144,6 @@ void	cast_rays(t_map_info *map)
 		i++;
 	}
 	i = 0;
-	printf("rendering\n");
 	while (i < NB_RAYS)
 	{
 		if (map->frame[i].distance > 0)

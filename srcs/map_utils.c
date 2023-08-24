@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 10:12:56 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/23 13:00:34 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/23 21:47:25 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,19 @@ int	init_void_map(t_map_info *map)
 	map->no_texture = malloc(sizeof(t_text));
 	if (!map->no_texture)
 		return (print_error("malloc failed\n", 0, 0));
+	map->no_texture->is_init = 0;
 	map->so_texture = malloc(sizeof(t_text));
 	if (!map->so_texture)
 		return (print_error("malloc failed\n", 0, 0));
+	map->so_texture->is_init = 0;
 	map->ea_texture = malloc(sizeof(t_text));
 	if (!map->ea_texture)
 		return (print_error("malloc failed\n", 0, 0));
+	map->ea_texture->is_init = 0;
 	map->we_texture = malloc(sizeof(t_text));
 	if (!map->we_texture)
 		return (print_error("malloc failed\n", 0, 0));
+	map->we_texture->is_init = 0;
 	map->floor_color = -1;
 	map->ceiling_color = -1;
 	map->map_width = 0;
@@ -43,6 +47,7 @@ int	init_void_map(t_map_info *map)
 	map->player.mini_pos.x = 0;
 	map->player.mini_pos.y = 0;
 	map->player.dir = 0;
+	map->frame = 0;
 	return (1);
 }
 
@@ -86,70 +91,29 @@ int	is_map_desc(char *line)
 		return (1);
 }
 
-void	debug_print_texture_fields(t_text *t)
+int	free_map(t_map_info *map)
 {
-	// img
-	printf("img: ");
-	if (!t->img)
-		printf("null\n");
-	else
-		printf("%p\n", t->img);
-	
-	// addr
-	printf("addr: ");
-	if (!t->addr)
-		printf("null\n");
-	else
-		printf("%p\n", t->addr);
-	
-	// bits_per_pixel
-	printf("bits_per_pixel: ");
-	if ((!t->bits_per_pixel))
-		printf("null\n");
-	else
-		printf("%d\n", t->bits_per_pixel);
-	
-	// line_lenght
-	printf("line_lenght: ");
-	if ((!t->line_length))
-		printf("null\n");
-	else
-		printf("%d\n", t->line_length);
-
-	// endian
-	printf("endian: ");
-	if ((!t->endian))
-		printf("null\n");
-	else
-		printf("%d\n", t->endian);
-
-	// width
-	printf("width: ");
-	if ((!t->width))
-		printf("null\n");
-	else
-		printf("%d\n", t->width);
-
-	// height
-	printf("height: ");
-	if ((!t->height))
-		printf("null\n");
-	else
-		printf("%d\n", t->height);
-}
-
-//TODO delete before push
-void	debug_print_map_fields(t_map_info *map)
-{
-	printf("---- no_texture ----\n");
-	debug_print_texture_fields(map->no_texture);
-	printf("---- so_texture ----\n");
-	debug_print_texture_fields(map->so_texture);
-	printf("---- ea_texture ----\n");
-	debug_print_texture_fields(map->ea_texture);
-	printf("---- we_texture ----\n");
-	debug_print_texture_fields(map->we_texture);
-	printf("---- colors ----\n");
-	printf("floor: %d\n", map->floor_color);
-	printf("ceil: %d\n", map->ceiling_color);
+	int	i;
+	free(map->frame);
+	i = 0;
+	while (i < map->map_height)
+	{
+		free(map->map[i]);
+		i++;
+	}
+	free(map->map);
+	mlx_destroy_image(map->mlx, map->no_texture->img);
+	mlx_destroy_image(map->mlx, map->so_texture->img);
+	mlx_destroy_image(map->mlx, map->ea_texture->img);
+	mlx_destroy_image(map->mlx, map->we_texture->img);
+	free(map->no_texture);
+	free(map->so_texture);
+	free(map->ea_texture);
+	free(map->we_texture);
+	mlx_destroy_image(map->mlx, map->mlx_img.img);
+	mlx_destroy_window(map->mlx, map->mlx_win);
+	mlx_destroy_display(map->mlx);
+	free(map->mlx);
+	exit(EXIT_SUCCESS);
+	return (0);
 }

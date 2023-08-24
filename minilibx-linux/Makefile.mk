@@ -10,6 +10,23 @@
 
 ## Please use configure script
 
+# Colors
+BLACK=\033[30m
+RED=\033[31m
+GREEN=\033[32m
+YELLOW=\033[33m
+BLUE=\033[34m
+PURPLE=\033[35m
+CYAN=\033[36m
+WHITE=\033[37m
+
+# Text
+ERASE=\033[2K\r
+RESET=\033[0m
+BOLD=\033[1m
+FAINT=\033[2m
+ITALIC=\033[3m
+UNDERLINE=\033[4m
 
 INC	=%%%%
 
@@ -42,12 +59,14 @@ all	: $(NAME)
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
+	@echo "$(ERASE)$(BOLD)$(NAME)$(RESET)$(GREEN) compiling... $(RESET)$<"
 
 $(NAME)	: $(OBJ)
-	ar -r $(NAME) $(OBJ)
-	ranlib $(NAME)
-	cp $(NAME) $(NAME_UNAME)
+	@ar -r $(NAME) $(OBJ)
+	@ranlib $(NAME)
+	@cp $(NAME) $(NAME_UNAME)
+	@echo "$(ERASE)$(GREEN)$(BOLD)✅ $(NAME)$(GREEN) created.$(RESET)"
 
 check: all
 	@test/run_tests.sh
@@ -55,12 +74,13 @@ check: all
 show:
 	@printf "NAME  		: $(NAME)\n"
 	@printf "NAME_UNAME	: $(NAME_UNAME)\n"
-	@printf "CC		: $(CC)\n"
+	@printf "CC			: $(CC)\n"
 	@printf "CFLAGS		: $(CFLAGS)\n"
 	@printf "SRC		:\n	$(SRC)\n"
 	@printf "OBJ		:\n	$(OBJ)\n"
 
 clean	:
-	rm -rf $(OBJ_DIR)/ $(NAME) $(NAME_UNAME) *~ core *.core
+	@rm -rf $(OBJ_DIR)/ $(NAME) $(NAME_UNAME) *~ core *.core
+	@echo "$(ERASE)$(BOLD)$(NAME)$(RESET)$(RED) objects deleted.$(RESET)"
 
 .PHONY: all check show clean

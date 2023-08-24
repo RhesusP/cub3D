@@ -6,62 +6,140 @@
 #    By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/08/23 12:57:24 by cbernot          ###   ########.fr        #
+#    Updated: 2023/08/24 19:17:18 by cbernot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	cub3D
-SRCS	=	./srcs/main.c \
-			./srcs/minimap/minimap.c \
-			./srcs/mlx/trace.c \
-			./srcs/mlx/bressenham.c \
-			./srcs/mlx/mlx_utils.c \
-			./srcs/parsing/add_colors.c \
-			./srcs/parsing/add_textures.c \
-			./srcs/parsing/parse_map.c \
-			./srcs/parsing/player.c \
-			./srcs/raycasting/draw_frame.c \
-			./srcs/map_utils.c \
-			./srcs/utils.c \
-			./srcs/movement.c
+.PHONY: all clean fclean re makemlx makelibft
 
-MINILIBX_DIR	=	minilibx-linux/
-MINILIBX_NAME	=	libmlx.a
-MINILIBX		=	$(addprefix $(MINILIBX_DIR), $(MINILIBX_NAME))			
+NAME			:=	cub3D
+LIBFT 			:=	libft/libft.a
+MLX				:=	minilibx-linux/libmlx.a
 
-LIBFT_DIR	=	libft/
-LIBFT_NAME	=	libft.a
-LIBFT		=	$(addprefix $(LIBFT_DIR), $(LIBFT_NAME))
+# ------------------------------------------------------------------------------
+# ALL FILES
+# ------------------------------------------------------------------------------
 
-OBJS 		=	${SRCS:.c=.o}
-INCLUDES	=	./includes
-FLAGS		=	-Wall -Wextra -Werror
-DIR_FLAG	=	--no-print-directory
+# Files
+LST_INC			:=	cub3d.h
+LST_SRC			:=	main.c \
+					map_utils.c \
+					utils.c \
+					movement.c \
+					errors.c
+LST_RENDERING	:=	trace.c \
+					bressenham.c
+LST_PARSING		:=	colors.c \
+					textures.c \
+					rules.c \
+					parse_map.c \
+					player.c
+LST_MINIMAP		:=	minimap.c
+LST_RAYCASTING	:=	draw_frame.c
+LST_MLX			:=	mlx_utils.c
 
-%.o: %.c | minilibx libft ./includes/cub3d.h
-	cc ${FLAGS} -I ${INCLUDES} -c $< -o $@
+# Directories
+DIR_MLX			:=	minilibx-linux/
+DIR_FT			:=	libft/
 
-${NAME}: ${OBJS} ${LIBFT} ${MINILIBX} ./includes/cub3d.h
-	cc ${OBJS} -L ${MINILIBX_DIR} -lmlx -lXext -lX11 -L ./libft -lft -lm -o ${NAME}
+DIR_INC			:=	includes/
+DIR_SRC			:=	srcs/
+DIR_RENDERING	:=	rendering/
+DIR_PARSING		:=	parsing/
+DIR_MINIMAP		:=	minimap/
+DIR_RAYCASTING	:=	raycasting/
+DIR_MLX_S		:=	mlx/
+DIR_OBJS		:=	objs/
 
-all: ${NAME}
+# Shortcuts
+INCS			:=	$(addprefix $(DIR_INC), $(LST_INC))
+SRCS			:=	$(addprefix $(DIR_SRC), $(LST_SRC)) \
+					$(addprefix $(DIR_SRC)$(DIR_RENDERING), $(LST_RENDERING)) \
+					$(addprefix $(DIR_SRC)$(DIR_PARSING), $(LST_PARSING)) \
+					$(addprefix $(DIR_SRC)$(DIR_MINIMAP), $(LST_MINIMAP)) \
+					$(addprefix $(DIR_SRC)$(DIR_RAYCASTING), $(LST_RAYCASTING)) \
+					$(addprefix $(DIR_SRC)$(DIR_MLX_S), $(LST_MLX))
+OBJS			:=	$(subst $(DIR_SRC), $(DIR_OBJS), $(SRCS:.c=.o))
 
-libft:
-	@make -C ${LIBFT_DIR}
 
-minilibx:
-	@make -C ${MINILIBX_DIR}
+# ------------------------------------------------------------------------------
+# COMMAND VARIABLES
+# ------------------------------------------------------------------------------
 
+# Commands
+CC				:=	cc
+CFLAGS			:=	-Wall -Wextra -Werror
+CI				:=	-I $(DIR_FT) -I $(DIR_INC) -I $(DIR_MLX)
+CF				:=	-L minilibx-linux -lmlx -lXext -lX11 -lm -L libft -lft
+RM				:=	rm -rf
+
+# Colors
+BLACK=\033[30m
+RED=\033[31m
+GREEN=\033[32m
+YELLOW=\033[33m
+BLUE=\033[34m
+PURPLE=\033[35m
+CYAN=\033[36m
+WHITE=\033[37m
+
+# Text
+ERASE=\033[2K\r
+RESET=\033[0m
+BOLD=\033[1m
+FAINT=\033[2m
+ITALIC=\033[3m
+UNDERLINE=\033[4m
+
+# ------------------------------------------------------------------------------
+# RULES
+# ------------------------------------------------------------------------------
+
+all: makemlx makelibft $(NAME)
+
+# Binary
+$(NAME): $(OBJS) $(INCS) $(LIBFT) $(MLX)
+	@$(CC) $(CFLAGS) $(CI) $(LIBFT) $(MLX) $(OBJS) -o $@ $(CF)
+	@echo "$(ERASE)\n$(PURPLE)$(BOLD)🎉🎉 executable $(NAME) created 🎉🎉$(RESET)"
+	@echo "$(ERASE)run $(BOLD)./$(NAME) path_to_map.cub$(RESET) to play.$(RESET)"
+
+$(DIR_OBJS)%.o: $(DIR_SRC)%.c $(INCS) $(LIBFT) $(MLX) | $(DIR_OBJS)
+	@$(CC) $(CFLAGS) $(CI) -c $< -o $@
+	@echo "$(ERASE)$(BOLD)$(NAME)$(RESET)$(GREEN) compiling... $(RESET)$<"
+
+$(DIR_OBJS):
+	@mkdir -p $(DIR_OBJS) \
+	$(DIR_OBJS)$(DIR_RENDERING) \
+	$(DIR_OBJS)$(DIR_PARSING) \
+	$(DIR_OBJS)$(DIR_MINIMAP) \
+	$(DIR_OBJS)$(DIR_RAYCASTING) \
+	$(DIR_OBJS)$(DIR_MLX_S)
+	@echo "$(ERASE)$(BOLD)$(NAME)$(RESET)$(GREEN) objects directory created.$(RESET)"
+
+# Libraries
+$(MLX): makemlx
+
+$(LIBFT): makelibft
+
+makemlx:
+	@$(MAKE) -C $(DIR_MLX) --quiet --no-print-directory 
+	
+makelibft:
+	@$(MAKE) -C $(DIR_FT) --no-print-directory
+
+# Cleaning
 clean:
-	make ${DIR_FLAG} clean -C ${MINILIBX_DIR}
-	make ${DIR_FLAG} clean -C ./libft
-	rm -f ${OBJS}
+	@$(RM) $(OBJS)
+	@$(RM) $(DIR_OBJS)
+	@echo "$(ERASE)$(BOLD)$(NAME)$(RESET)$(RED) objects deleted.$(RESET)"
+	@$(MAKE) clean -C $(DIR_FT) --no-print-directory
+	@$(MAKE) clean -C $(DIR_MLX) --no-print-directory
 
 fclean: clean
-	rm -rf ${MINILIBX}
-	make ${DIR_FLAG} fclean -C ./libft
-	rm -f ${NAME}
+	@$(RM) $(NAME)
+	@$(MAKE) fclean -C $(DIR_FT) --no-print-directory
+	@$(MAKE) clean -C $(DIR_MLX) --no-print-directory
+	@echo "$(ERASE)$(BOLD)libmlx.a$(RESET)$(RED) deleted.$(RESET)"
+	@echo "$(ERASE)$(RED)$(BOLD)🗑️  $(NAME) deleted.$(RESET)"
 
 re: fclean all
-
-.PHONY: all clean fclean re libft

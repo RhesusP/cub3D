@@ -1,45 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/07 09:33:38 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/23 20:54:03 by cbernot          ###   ########.fr       */
+/*   Created: 2022/11/09 12:39:00 by cbernot           #+#    #+#             */
+/*   Updated: 2023/08/24 18:42:36 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../includes/cub3d.h"
+#include "../includes/libft.h"
 
-unsigned int	ft_strlen_wnl(char *str)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	unsigned int	i;
+	char	*res;
+	int		i;
+	int		j;
 
-	i = 0;
-	while (str[i] != '\0' && str[i] != '\n')
-		i++;
-	return (i);
-}
-
-// without consedering ending \n \0 and ' '
-char	*ft_strdup_wnls(const char *s1)
-{
-	char			*res;
-	unsigned int	i;
-	unsigned int	j;
-
-	j = ft_strlen(s1);
-	while (s1[j] == '\0' || s1[j] == '\n' || s1[j] == ' ')
-		j--;
-	res = malloc(sizeof(char) * (j + 2));
+	if (!s1 || !s2)
+		return (NULL);
+	res = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!res)
 		return (res);
 	i = 0;
-	while (i < j + 1)
+	while (s1[i] != '\0')
 	{
 		res[i] = s1[i];
 		i++;
+	}
+	j = 0;
+	while (s2[j] != '\0')
+	{
+		res[i] = s2[j];
+		i++;
+		j++;
 	}
 	res[i] = '\0';
 	return (res);

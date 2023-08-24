@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 12:24:29 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/23 19:38:14 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/23 22:05:34 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,14 @@ int	load_texture(t_map_info *map, t_text *texture, char *path)
 {
 	texture->img = mlx_xpm_file_to_image(map->mlx, path, &texture->width, &texture->height);
 	if (!texture->img)
-	{
-		printf("%s", path);
 		return (print_error("texture not found\n", 0, 0));
-	}
 	texture->addr = mlx_get_data_addr(texture->img, &texture->bits_per_pixel, &texture->line_length, &texture->endian);
 	if (!texture->addr)
 		return (print_error("texture addr not found\n", 0, 0));
 	return (1);
 }
 
-int	get_texture_pixel(t_text *text, int x, int y)
+int	get_texture_color(t_text *text, int x, int y)
 {
 	if (x < 0 || x >= text->width)
 		return (0);
@@ -66,19 +63,11 @@ int	key_hook(int keycode, t_map_info *map)
 	else if (keycode == RIGHT)
 		move_right(map);
 	if (keycode == ESC)
-		exit(EXIT_SUCCESS);
+		free_map(map);
 	return (0);
 }
 
-int	free_map(t_map_info *map)
-{
-	printf("need to free map\n");
-	(void)map;
-	exit(EXIT_SUCCESS);
-	return (0);
-}
-
-void	start_mlx(t_map_info *map)
+void	game_loop(t_map_info *map)
 {
 	mlx_do_key_autorepeaton(map->mlx);
 	mlx_hook(map->mlx_win, 2, 1L << 0, key_hook, map);

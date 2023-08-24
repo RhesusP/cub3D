@@ -1,42 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/07 09:33:38 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/23 20:54:03 by cbernot          ###   ########.fr       */
+/*   Created: 2022/11/09 15:46:11 by cbernot           #+#    #+#             */
+/*   Updated: 2023/08/24 18:42:36 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../includes/cub3d.h"
+#include "../includes/libft.h"
 
-unsigned int	ft_strlen_wnl(char *str)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (str[i] != '\0' && str[i] != '\n')
-		i++;
-	return (i);
-}
-
-// without consedering ending \n \0 and ' '
-char	*ft_strdup_wnls(const char *s1)
+char	*ft_strdup(const char *s1)
 {
 	char			*res;
 	unsigned int	i;
-	unsigned int	j;
 
-	j = ft_strlen(s1);
-	while (s1[j] == '\0' || s1[j] == '\n' || s1[j] == ' ')
-		j--;
-	res = malloc(sizeof(char) * (j + 2));
+	res = malloc(sizeof(char) * (ft_strlen(s1) + 1));
 	if (!res)
 		return (res);
 	i = 0;
-	while (i < j + 1)
+	while (s1[i] != '\0')
 	{
 		res[i] = s1[i];
 		i++;

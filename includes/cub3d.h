@@ -6,13 +6,13 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:34:21 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/23 20:04:54 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/24 18:44:23 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
-# include "./../libft/libft.h"
+# include "./../libft/includes/libft.h"
 # include "./../minilibx-linux/mlx.h"
 # include <stdio.h>
 # include <math.h>
@@ -69,6 +69,7 @@ typedef struct	s_text
 	int			endian;
 	int			width;
 	int			height;
+	int			is_init;
 }	t_text;
 
 typedef struct	s_frame
@@ -102,7 +103,6 @@ typedef struct	s_map_info
 	int			ceiling_color;
 	int			map_width;
 	int			map_height;
-	char		*sprite_texture;
 	char		**map;
 	t_frame		*frame;
 	t_player	player;
@@ -119,13 +119,13 @@ int				add_ceiling_color(char *line, t_map_info *map);
 void			get_start_pos(t_map_info *map);
 
 /* --------- MLX  --------*/
-void			start_mlx(t_map_info *map);
+void			game_loop(t_map_info *map);
 void			draw_slice(t_map_info *map, t_mlx_data *img, t_frame frame, int index);
 void			ft_mlx_pixel_put(t_mlx_data *data, int x, int y, int color);
 void			ft_draw_line(t_mlx_data *img, t_point p1, t_point p2, int col);
 int				create_mlx_color(int t, int r, int g, int b);
 int				load_texture(t_map_info *map, t_text *texture, char *path);
-int				get_texture_pixel(t_text *text, int x, int y);
+int				get_texture_color(t_text *text, int x, int y);
 
 /* ------ MOVEMENT ------*/
 void			move_forward(t_map_info *map);
@@ -145,13 +145,16 @@ int				init_map_array(t_map_info *map, int height, int width);
 int				is_map_desc(char *line);
 unsigned int	ft_strlen_wnl(char *str);
 char			*ft_strdup_wnls(const char *s1);
-void			debug_print_map(t_map_info *map);
 double			normalize_angle(double rad_angle);
 
 /* -------- BONUS --------*/
 void			draw_minimap(t_map_info *map, t_mlx_data *img);
 
-void	debug_print_map_fields(t_map_info *map);
+int	print_error(char *str, int use_perror, int exit_status);
+int	free_map(t_map_info *map);
+int	map_have_one_player(char **map);
+int	text_col_complete(t_map_info *map);
+
 int	is_desc_char_valid(char c);
 
 #endif

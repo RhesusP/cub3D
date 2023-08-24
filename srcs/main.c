@@ -6,23 +6,11 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:25:31 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/23 19:56:59 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/23 21:50:13 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/cub3d.h"
-
-int	print_error(char *str, int use_perror, int exit_status)
-{
-	if (use_perror)
-		perror("\033[31mError\033[39m\n");
-	else
-	{
-		ft_putstr_fd("\033[31mError\033[39m\n", 2);
-		ft_putstr_fd(str, 2);
-	}
-	return (exit_status);
-}
 
 int	is_file_extension_correct(char *filename)
 {
@@ -49,12 +37,16 @@ int	main(int argc, char **argv)
 		return (print_error("Wrong file extension\n", 0, EXIT_FAILURE));
 	map.mlx = mlx_init();
 	if (!map.mlx)
-		print_error("mlx_init() failed\n", 0, EXIT_FAILURE);
+		return (print_error("mlx_init() failed\n", 0, EXIT_FAILURE));
 	map.mlx_win = mlx_new_window(map.mlx, WIDTH, HEIGHT, "cub3D");
 	if (!map.mlx_win)
-		print_error("mlx_new_window() failed\n", 0, EXIT_FAILURE);
+	{
+		mlx_destroy_display(map.mlx);
+		free(map.mlx);
+		return (print_error("mlx_new_window() failed\n", 0, EXIT_FAILURE));
+	}
 	if (!parse_map(argv[1], &map))
 		return (EXIT_FAILURE);
-	start_mlx(&map);
+	game_loop(&map);
 	return (0);
 }
