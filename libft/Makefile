@@ -6,7 +6,7 @@
 #    By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/07 14:02:40 by cbernot           #+#    #+#              #
-#    Updated: 2023/08/24 19:15:33 by cbernot          ###   ########.fr        #
+#    Updated: 2023/08/24 19:21:05 by cbernot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,10 +59,10 @@ OBJS		:=	$(SRCS:$(DIR_SRC)%.c=$(DIR_OBJS)%.o)
 # ------------------------------------------------------------------------------
 
 # Commands
-CC				:=	cc
-CFLAGS			:=	-Wall -Wextra -Werror
-CI				:=	-I $(DIR_INC)
-RM				:=	rm -rf
+CC			:=	cc
+CFLAGS		:=	-Wall -Wextra -Werror
+CI			:=	-I $(DIR_INC)
+RM			:=	rm -rf
 
 # Colors
 BLACK=\033[30m
