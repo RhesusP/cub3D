@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:25:31 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/23 21:50:13 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/24 21:15:15 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,12 @@ int	main(int argc, char **argv)
 		return (print_error("mlx_new_window() failed\n", 0, EXIT_FAILURE));
 	}
 	if (!parse_map(argv[1], &map))
+	{
+		mlx_destroy_window(map.mlx, map.mlx_win);
+		mlx_destroy_display(map.mlx);
+		free(map.mlx);
 		return (EXIT_FAILURE);
+	}
 	game_loop(&map);
 	return (0);
 }

@@ -6,11 +6,36 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 09:15:19 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/23 22:09:33 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/24 22:08:41 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/cub3d.h"
+
+int	free_allocated_text(t_map_info *map)
+{
+	if (map->no_texture->is_init)
+	{
+		mlx_destroy_image(map->mlx, map->no_texture->img);
+		free(map->no_texture);
+	}
+	if (map->so_texture->is_init)
+	{
+		mlx_destroy_image(map->mlx, map->so_texture->img);
+		free(map->so_texture);
+	}
+	if (map->ea_texture->is_init)
+	{
+		mlx_destroy_image(map->mlx, map->ea_texture->img);
+		free(map->ea_texture);
+	}
+	if (map->we_texture->is_init)
+	{
+		mlx_destroy_image(map->mlx, map->we_texture->img);
+		free(map->we_texture);
+	}
+	return (0);
+}
 
 int	get_line(char *line, t_map_info *map)
 {
@@ -100,7 +125,7 @@ int	fill_map_array(char *map_path, t_map_info *map)
 
 	fd = open(map_path, O_RDONLY);
 	if (fd == -1)
-		print_error("", 1, 0);
+		return (print_error("unable to open map\n", 0, 0));
 	line = "";
 	i = 0;
 	while (line)
@@ -110,7 +135,8 @@ int	fill_map_array(char *map_path, t_map_info *map)
 		{
 			if (!fill_map_row(line, map, i))
 			{
-				printf("fill return 0\n");
+				free(line);
+				close(fd);
 				return (0);
 			}
 			i++;
@@ -125,7 +151,9 @@ int	parse_map(char *map_path, t_map_info *map)
 {
 	int		fd;
 	char	*line;
+	int		err;
 
+	err = 0;
 	fd = open(map_path, O_RDONLY);
 	if (fd == -1)
 		return (print_error("unable to open map\n", 0, 0));
@@ -135,15 +163,25 @@ int	parse_map(char *map_path, t_map_info *map)
 	while (line)
 	{
 		line = get_next_line(fd);
-		if (!get_line(line, map))
-			return (0);
+		if (!err && !get_line(line, map))
+			err = 1;
 		free(line);
 	}
 	close(fd);
-	init_map_array(map, map->map_height, map->map_width);
-	fill_map_array(map_path, map);
+	if (err)
+		return (free_allocated_text(map));
+	if (!init_map_array(map, map->map_height, map->map_width))
+		return (free_allocated_text(map));
+	if (!fill_map_array(map_path, map))
+	{
+		free_allocated_array(&map->map, 0);
+		return (free_allocated_text(map));
+	}
 	if (!map_have_one_player(map->map))
-		return (0);
+	{
+		free_allocated_array(&map->map, 0);
+		return (free_allocated_text(map));
+	}
 	get_start_pos(map);
 	return (1);
 }

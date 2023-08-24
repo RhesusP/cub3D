@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 10:12:56 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/23 21:47:25 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/24 21:03:55 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,30 @@ int	init_void_map(t_map_info *map)
 	if (!map->no_texture)
 		return (print_error("malloc failed\n", 0, 0));
 	map->no_texture->is_init = 0;
+	
 	map->so_texture = malloc(sizeof(t_text));
 	if (!map->so_texture)
+	{
+		free(map->no_texture);
 		return (print_error("malloc failed\n", 0, 0));
+	}
 	map->so_texture->is_init = 0;
 	map->ea_texture = malloc(sizeof(t_text));
 	if (!map->ea_texture)
+	{
+		free(map->no_texture);
+		free(map->so_texture);
 		return (print_error("malloc failed\n", 0, 0));
+	}
 	map->ea_texture->is_init = 0;
 	map->we_texture = malloc(sizeof(t_text));
 	if (!map->we_texture)
+	{
+		free(map->no_texture);
+		free(map->so_texture);
+		free(map->ea_texture);
 		return (print_error("malloc failed\n", 0, 0));
+	}
 	map->we_texture->is_init = 0;
 	map->floor_color = -1;
 	map->ceiling_color = -1;
@@ -51,20 +64,39 @@ int	init_void_map(t_map_info *map)
 	return (1);
 }
 
+void	free_partial_array(char ***array, int last_alloc)
+{
+	int	i;
+	
+	i = 0;
+	while (i < last_alloc)
+	{
+		free(*(array[i]));
+		i++;
+	}
+	free(*array);
+}
+
 int	init_map_array(t_map_info *map, int height, int width)
 {
 	int	i;
 
 	map->map = malloc(sizeof(char *) * (height + 1));
 	if (!map->map)
+	{
+		free_allocated_text(map);
 		return (print_error("malloc failed\n", 0, 0));
+	}
 	map->map[height] = NULL;
 	i = 0;
 	while (i < height)
 	{
 		map->map[i] = malloc(sizeof(char) * (width + 1));
 		if (!map->map[i])
+		{
+			free_partial_array(&map->map, i);
 			return (print_error("malloc failed\n", 0, 0));
+		}
 		map->map[i][width] = '\0';
 		i++;
 	}
@@ -110,7 +142,8 @@ int	free_map(t_map_info *map)
 	free(map->so_texture);
 	free(map->ea_texture);
 	free(map->we_texture);
-	mlx_destroy_image(map->mlx, map->mlx_img.img);
+	if (map->mlx_img.img)
+		mlx_destroy_image(map->mlx, map->mlx_img.img);
 	mlx_destroy_window(map->mlx, map->mlx_win);
 	mlx_destroy_display(map->mlx);
 	free(map->mlx);

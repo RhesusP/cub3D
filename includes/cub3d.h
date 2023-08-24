@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:34:21 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/24 18:44:23 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/24 20:54:33 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,8 @@ int	print_error(char *str, int use_perror, int exit_status);
 int	free_map(t_map_info *map);
 int	map_have_one_player(char **map);
 int	text_col_complete(t_map_info *map);
-
+int	free_allocated_text(t_map_info *map);
 int	is_desc_char_valid(char c);
-
+void	free_partial_array(char ***array, int last_alloc);
+int	free_allocated_array(char ***array, int is_err);
 #endif

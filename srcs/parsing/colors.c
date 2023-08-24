@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 09:32:12 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/23 22:07:27 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/24 20:55:02 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,24 @@ int	check_color_syntax(char *str)
 	return (col);
 }
 
+int	free_allocated_array(char ***array, int is_err)
+{
+	int	i;
+
+	if (*array == NULL)
+        return (0);
+	i = 0;
+	while ((*array)[i])
+	{
+		free((*array)[i]);
+		i++;
+	}
+	free(*array);
+	if (is_err)
+		return (print_error("invalid caracter detected\n", 0, -1));
+	return (0);
+}
+
 int	ft_get_color(char *str)
 {
 	int		r;
@@ -43,6 +61,8 @@ int	ft_get_color(char *str)
 	char	**split;
 
 	split = ft_split(str, ',');
+	if (!split)
+		return (print_error("malloc failed\n", 0, -1));
 	i = 0;
 	while (split[i])
 	{
@@ -53,14 +73,14 @@ int	ft_get_color(char *str)
 		else if (i == 2)
 			b = check_color_syntax(split[i]);
 		else
-			return (print_error("invalid caracter detected\n", 0, 0));		// TODO free memory
-		free(split[i]);
+			return (free_allocated_array(&split, 1));
 		i++;
 	}
-	free(split);
+	free_allocated_array(&split, 0);
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 		return (print_error("color is out of range [0, 255]\n", 0, -1));
 	return (create_mlx_color(0, r, g, b));
+	return (222);
 }
 
 int	add_floor_color(char *line, t_map_info *map)

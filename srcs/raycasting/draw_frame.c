@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 11:12:48 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/23 21:44:48 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/24 21:07:17 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,8 +126,8 @@ void	cast_rays(t_map_info *map)
 	map->frame = malloc(sizeof(t_frame) * NB_RAYS);
 	if (!map->frame)
 	{
-		print_error("malloc failed", 1, 0);
-		return;
+		print_error("malloc failed\n", 0, 0);
+		free_map(map);
 	}
 	angle_increment = (60.0 / NB_RAYS) * M_PI / 180.0;
 	ray_orientation = map->player.dir - (HALF_FOV * M_PI / 180.0);
@@ -158,11 +158,14 @@ void	cast_rays(t_map_info *map)
 void	draw_frame(t_map_info *map)
 {
 	map->mlx_img.img = mlx_new_image(map->mlx, WIDTH, HEIGHT);
+	if (!map->mlx_img.img)
+		free_map(map);
 	map->mlx_img.addr = mlx_get_data_addr(map->mlx_img.img, \
 		&map->mlx_img.bits_per_pixel, &map->mlx_img.line_length, \
 		&map->mlx_img.endian);
+	if (!map->mlx_img.addr)
+		free_map(map);
 	cast_rays(map);
 	draw_minimap(map, &map->mlx_img);
-
 	mlx_put_image_to_window(map->mlx, map->mlx_win, map->mlx_img.img, 0, 0);
 }
