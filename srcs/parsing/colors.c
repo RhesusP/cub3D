@@ -6,13 +6,13 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 09:32:12 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/24 20:55:02 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/26 00:54:21 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../includes/cub3d.h"
 
-int	check_color_syntax(char *str)
+static int	check_color_syntax(char *str)
 {
 	char	*temp;
 	int		i;
@@ -22,10 +22,11 @@ int	check_color_syntax(char *str)
 	i = 0;
 	while (temp[i] != '\0')
 	{
-		if (!(ft_isdigit(temp[i]) || temp[i] == '+' || temp[i] == '-' || temp[i] == ' '))
+		if (!(ft_isdigit(temp[i]) || temp[i] == '+' || temp[i] == '-' || \
+			temp[i] == ' '))
 		{
 			free(temp);
-			return (print_error("invalid character in color\n", 0, -1));
+			return (print_error("invalid character in color\n", -1));
 		}
 		i++;
 	}
@@ -34,37 +35,19 @@ int	check_color_syntax(char *str)
 	return (col);
 }
 
-int	free_allocated_array(char ***array, int is_err)
-{
-	int	i;
-
-	if (*array == NULL)
-        return (0);
-	i = 0;
-	while ((*array)[i])
-	{
-		free((*array)[i]);
-		i++;
-	}
-	free(*array);
-	if (is_err)
-		return (print_error("invalid caracter detected\n", 0, -1));
-	return (0);
-}
-
-int	ft_get_color(char *str)
+static int	ft_get_color(char *str)
 {
 	int		r;
 	int		g;
-	int 	b;
+	int		b;
 	int		i;
 	char	**split;
 
 	split = ft_split(str, ',');
 	if (!split)
-		return (print_error("malloc failed\n", 0, -1));
-	i = 0;
-	while (split[i])
+		return (print_error("malloc failed\n", -1));
+	i = -1;
+	while (split[++i])
 	{
 		if (i == 0)
 			r = check_color_syntax(split[i]);
@@ -74,22 +57,20 @@ int	ft_get_color(char *str)
 			b = check_color_syntax(split[i]);
 		else
 			return (free_allocated_array(&split, 1));
-		i++;
 	}
 	free_allocated_array(&split, 0);
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-		return (print_error("color is out of range [0, 255]\n", 0, -1));
+		return (print_error("color is out of range [0, 255]\n", -1));
 	return (create_mlx_color(0, r, g, b));
-	return (222);
 }
 
-int	add_floor_color(char *line, t_map_info *map)
+static int	add_floor_color(char *line, t_map_info *map)
 {
 	int	i;
 	int	col;
 
 	if (map->floor_color != -1)
-		return (print_error("double definition of a color (F)\n", 0, 0));
+		return (print_error("double definition of a color (F)\n", 0));
 	i = 1;
 	while (line[i] == ' ')
 		i++;
@@ -100,13 +81,13 @@ int	add_floor_color(char *line, t_map_info *map)
 	return (1);
 }
 
-int	add_ceiling_color(char *line, t_map_info *map)
+static int	add_ceiling_color(char *line, t_map_info *map)
 {
 	int	i;
 	int	col;
 
 	if (map->ceiling_color != -1)
-		return (print_error("double definition of a color (C)\n", 0, 0));
+		return (print_error("double definition of a color (C)\n", 0));
 	i = 1;
 	while (line[i] == ' ')
 		i++;
@@ -115,4 +96,21 @@ int	add_ceiling_color(char *line, t_map_info *map)
 		return (0);
 	map->ceiling_color = col;
 	return (1);
+}
+
+int	add_color(t_map_info *map, char *line)
+{
+	if (ft_strncmp(line, "F ", 2) == 0)
+	{
+		if (!add_floor_color(line, map))
+			return (0);
+		return (1);
+	}
+	else if (ft_strncmp(line, "C ", 2) == 0)
+	{
+		if (!add_ceiling_color(line, map))
+			return (0);
+		return (1);
+	}
+	return (-1);
 }

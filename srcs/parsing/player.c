@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 09:34:59 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/23 22:07:22 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/26 00:52:56 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  * @param orientation char found in map description
  * @return double 
  */
-double	get_player_orientation(char orientation)
+static double	get_player_orientation(char orientation)
 {
 	if (orientation == 'N')
 		return (3 * M_PI_2);

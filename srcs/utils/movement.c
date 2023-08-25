@@ -6,13 +6,13 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 12:09:38 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/23 20:38:36 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/26 00:38:50 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/cub3d.h"
 
-int	is_blocking(t_map_info *map, int new_x, int new_y)
+static int	is_blocking(t_map_info *map, int new_x, int new_y)
 {
 	new_x /= CUBE_SIZE;
 	new_y /= CUBE_SIZE;

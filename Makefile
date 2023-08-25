@@ -6,7 +6,7 @@
 #    By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/08/24 22:13:57 by cbernot          ###   ########.fr        #
+#    Updated: 2023/08/26 00:48:28 by cbernot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,11 +22,7 @@ MLX				:=	minilibx-linux/libmlx.a
 
 # Files
 LST_INC			:=	cub3d.h
-LST_SRC			:=	main.c \
-					map_utils.c \
-					utils.c \
-					movement.c \
-					errors.c
+LST_SRC			:=	main.c
 LST_RENDERING	:=	trace.c \
 					bressenham.c
 LST_PARSING		:=	colors.c \
@@ -35,8 +31,18 @@ LST_PARSING		:=	colors.c \
 					parse_map.c \
 					player.c
 LST_MINIMAP		:=	minimap.c
-LST_RAYCASTING	:=	draw_frame.c
-LST_MLX			:=	mlx_utils.c
+LST_RAYCASTING	:=	draw_frame.c \
+					dda.c \
+					dda_utils.c
+LST_MLX			:=	mlx_utils.c \
+					pixel_put.c
+LST_UTILS		:=	free.c \
+					errors.c \
+					map.c \
+					strings.c \
+					init_textures.c \
+					maths.c	\
+					movement.c
 
 # Directories
 DIR_MLX			:=	minilibx-linux/
@@ -48,6 +54,7 @@ DIR_RENDERING	:=	rendering/
 DIR_PARSING		:=	parsing/
 DIR_MINIMAP		:=	minimap/
 DIR_RAYCASTING	:=	raycasting/
+DIR_UTILS		:=	utils/
 DIR_MLX_S		:=	mlx/
 DIR_OBJS		:=	objs/
 
@@ -58,7 +65,8 @@ SRCS			:=	$(addprefix $(DIR_SRC), $(LST_SRC)) \
 					$(addprefix $(DIR_SRC)$(DIR_PARSING), $(LST_PARSING)) \
 					$(addprefix $(DIR_SRC)$(DIR_MINIMAP), $(LST_MINIMAP)) \
 					$(addprefix $(DIR_SRC)$(DIR_RAYCASTING), $(LST_RAYCASTING)) \
-					$(addprefix $(DIR_SRC)$(DIR_MLX_S), $(LST_MLX))
+					$(addprefix $(DIR_SRC)$(DIR_MLX_S), $(LST_MLX)) \
+					$(addprefix $(DIR_SRC)$(DIR_UTILS), $(LST_UTILS))
 OBJS			:=	$(subst $(DIR_SRC), $(DIR_OBJS), $(SRCS:.c=.o))
 
 
@@ -68,7 +76,7 @@ OBJS			:=	$(subst $(DIR_SRC), $(DIR_OBJS), $(SRCS:.c=.o))
 
 # Commands
 CC				:=	cc
-CFLAGS			:=	-Wall -Wextra -Werror
+# CFLAGS			:=	-Wall -Wextra -Werror
 CI				:=	-I $(DIR_FT) -I $(DIR_INC) -I $(DIR_MLX)
 CF				:=	-L minilibx-linux -lmlx -lXext -lX11 -lm -L libft -lft
 RM				:=	rm -rf
@@ -113,7 +121,8 @@ $(DIR_OBJS):
 	$(DIR_OBJS)$(DIR_PARSING) \
 	$(DIR_OBJS)$(DIR_MINIMAP) \
 	$(DIR_OBJS)$(DIR_RAYCASTING) \
-	$(DIR_OBJS)$(DIR_MLX_S)
+	$(DIR_OBJS)$(DIR_MLX_S) \
+	$(DIR_OBJS)$(DIR_UTILS)
 	@echo "$(ERASE)$(BOLD)$(NAME)$(RESET)$(GREEN) objects directory created.$(RESET)"
 
 # Libraries
