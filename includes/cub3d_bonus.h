@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:34:21 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/26 12:40:36 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/26 12:42:12 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 # include "./../libft/includes/libft.h"
 # include "./../minilibx-linux/mlx.h"
 # include <stdio.h>
@@ -102,6 +102,7 @@ typedef struct s_dda_vars
 typedef struct s_player
 {
 	t_point	map_pos;
+	t_point	mini_pos;
 	double	dir;
 	double	speed;
 }	t_player;
@@ -175,5 +176,8 @@ int				free_allocated_array(char ***array, int is_err);
 int				free_map(t_map_info *map);
 int				print_error(char *str, int exit_status);
 int				is_file_extension_correct(char *filename);
+
+/* -------- BONUS --------*/
+void			draw_minimap(t_map_info *map, t_mlx_data *img);
 
 #endif
