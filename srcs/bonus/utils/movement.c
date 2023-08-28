@@ -6,12 +6,20 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 12:09:38 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/26 12:41:14 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/27 13:04:23 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../../includes/cub3d_bonus.h"
 
+/**
+ * @brief Checks if the player can move to the new position.
+ * @details The new position is valid if it is in boundaries and is not a wall.
+ * @param map 
+ * @param new_x x coordinate of position to check
+ * @param new_y y coordinate of position to check
+ * @return int 1 if the new position is invalid, 0 otherwise
+ */
 static int	is_blocking(t_map_info *map, int new_x, int new_y)
 {
 	new_x /= CUBE_SIZE;
@@ -30,6 +38,12 @@ static int	is_blocking(t_map_info *map, int new_x, int new_y)
 	return (0);
 }
 
+/**
+ * @brief Moves the player forward
+ * @details If the new position is in boundaries and is not a wall, the player
+ * moves to the new position.
+ * @param map 
+ */
 void	move_forward(t_map_info *map)
 {
 	double	new_x;
@@ -48,6 +62,12 @@ void	move_forward(t_map_info *map)
 	draw_frame(map);
 }
 
+/**
+ * @brief Moves the player backward
+ * @details If the new position is in boundaries and is not a wall, the player
+ * moves to the new position.
+ * @param map 
+ */
 void	move_backward(t_map_info *map)
 {
 	double	new_x;
@@ -66,6 +86,12 @@ void	move_backward(t_map_info *map)
 	draw_frame(map);
 }
 
+/**
+ * @brief Moves the player to its left
+ * @details If the new position is in boundaries and is not a wall, the player
+ * moves to the new position.
+ * @param map 
+ */
 void	move_left(t_map_info *map)
 {
 	double	new_x;
@@ -86,6 +112,12 @@ void	move_left(t_map_info *map)
 	draw_frame(map);
 }
 
+/**
+ * @brief Moves the player to its right
+ * @details If the new position is in boundaries and is not a wall, the player
+ * moves to the new position.
+ * @param map 
+ */
 void	move_right(t_map_info *map)
 {
 	double	new_x;

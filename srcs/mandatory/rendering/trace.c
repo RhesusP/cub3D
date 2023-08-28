@@ -6,12 +6,19 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 16:34:14 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/26 12:41:59 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/27 13:07:30 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../../includes/cub3d.h"
 
+/**
+ * @brief Get the texture according to the wall face.
+ * 
+ * @param map 
+ * @param side 
+ * @return t_text* 
+ */
 static t_text	*get_texture(t_map_info *map, enum e_side side)
 {
 	if (side == NORTH)
@@ -24,6 +31,16 @@ static t_text	*get_texture(t_map_info *map, enum e_side side)
 		return (map->we_texture);
 }
 
+/**
+ * @brief Draw a column of the texture on the screen.
+ * @details Draws a column of the texture on the screen according to the frame
+ * informations. The texture is scaled according to the texture height and the
+ * wall height.
+ * @param map 
+ * @param frame 
+ * @param x index of the column (x coordinate)
+ * @param offset offset of the column (y coordinate)
+ */
 static void	draw_texture_col(t_map_info *map, t_frame frame, int x, int offset)
 {
 	float	scale;
@@ -52,6 +69,14 @@ static void	draw_texture_col(t_map_info *map, t_frame frame, int x, int offset)
 	}
 }
 
+/**
+ * @brief Draws a slice of the screen
+ * @details Draws a slice of the screen composed of a ceiling, a wall and a 
+ * floor.
+ * @param map 
+ * @param frame 
+ * @param index index of the slice. It is the x coordinate of the slice.
+ */
 void	draw_slice(t_map_info *map, t_frame frame, int index)
 {
 	int	i;

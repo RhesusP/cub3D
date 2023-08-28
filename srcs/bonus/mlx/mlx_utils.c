@@ -6,12 +6,20 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 12:24:29 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/26 12:40:45 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/27 13:12:16 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../../includes/cub3d_bonus.h"
 
+/**
+ * @brief Loads a texture from a path.
+ * 
+ * @param map 
+ * @param texture 
+ * @param path 
+ * @return int 1 if the texture is correctly loaded, 0 otherwise
+ */
 int	load_texture(t_map_info *map, t_text *texture, char *path)
 {
 	texture->img = mlx_xpm_file_to_image(map->mlx, path, \
@@ -25,6 +33,14 @@ int	load_texture(t_map_info *map, t_text *texture, char *path)
 	return (1);
 }
 
+/**
+ * @brief Get the color of a pixel in a texture.
+ * 
+ * @param text texture to get the color from
+ * @param x 
+ * @param y 
+ * @return int the color of the pixel
+ */
 int	get_texture_color(t_text *text, int x, int y)
 {
 	int	pixel_offset;
@@ -37,11 +53,35 @@ int	get_texture_color(t_text *text, int x, int y)
 	return (*(int *)(text->addr + pixel_offset));
 }
 
+/**
+ * @brief Create a color in the mlx format.
+ *  
+ * @param t transparency
+ * @param r red
+ * @param g green
+ * @param b blue
+ * @return int 
+ */
 int	create_mlx_color(int t, int r, int g, int b)
 {
 	return (t << 24 | r << 16 | g << 8 | b);
 }
 
+/**
+ * @brief Key handling function.
+ * @details Handles the following keys:
+ * - ESC: exits the program
+ * - LEFT_ARROW: rotates the player to the left
+ * - RIGHT_ARROW: rotates the player to the right
+ * - W: moves the player forward
+ * - S: moves the player backward
+ * - A: moves the player to the left
+ * - D: moves the player to the right
+ * The mlx image is destroyed and a new one is created to draw the new frame.
+ * @param keycode 
+ * @param map 
+ * @return int 
+ */
 static int	key_hook(int keycode, t_map_info *map)
 {
 	if (keycode == LEFT_ARROW)
@@ -71,6 +111,12 @@ static int	key_hook(int keycode, t_map_info *map)
 	return (0);
 }
 
+/**
+ * @brief Main game loop.
+ * @details The function initializes the mlx window and calls the key_hook 
+ * function and performs the raycasting and rendering parts.
+ * @param map 
+ */
 void	game_loop(t_map_info *map)
 {
 	mlx_do_key_autorepeaton(map->mlx);

@@ -6,12 +6,19 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 22:09:02 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/26 12:41:14 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/27 12:58:27 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../../includes/cub3d_bonus.h"
 
+/**
+ * @brief Checks if all map elements are initialized  (execpt map description).
+ * @details Checked elements are floor color, ceiling color, north texture, 
+ * south texture, east texture and west texture.
+ * @param map 
+ * @return int 1 if all elements are initialized, 0 otherwise
+ */
 int	text_col_complete(t_map_info *map)
 {
 	if (map->floor_color < 0 || map->ceiling_color < 0)
@@ -22,6 +29,11 @@ int	text_col_complete(t_map_info *map)
 	return (1);
 }
 
+/**
+ * @brief Check if the map description contains only one player.
+ * @param map map description
+ * @return int 1 if the map description contains only one player, 0 otherwise
+ */
 int	map_have_one_player(char **map)
 {
 	int	i;

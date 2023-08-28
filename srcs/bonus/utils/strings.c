@@ -6,12 +6,18 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 09:33:38 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/26 12:41:14 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/27 13:04:45 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../../includes/cub3d_bonus.h"
 
+/**
+ * @brief Returns the length of the string without the ending `\n`
+ * 
+ * @param str 
+ * @return unsigned int 
+ */
 unsigned int	ft_strlen_wnl(char *str)
 {
 	unsigned int	i;
@@ -22,7 +28,12 @@ unsigned int	ft_strlen_wnl(char *str)
 	return (i);
 }
 
-// without consedering ending \n \0 and ' '
+/**
+ * @brief Returns the string without the ending `\n` and spaces.
+ * 
+ * @param s1 
+ * @return char* Allocated string without the ending `\n` and spaces
+ */
 char	*ft_strdup_wnls(const char *s1)
 {
 	char			*res;

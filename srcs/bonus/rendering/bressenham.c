@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 20:08:05 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/26 12:41:14 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/27 13:01:32 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,15 @@ static void	draw_seg_high(t_mlx_data *img, t_point p1, t_point p2, int col)
 	}
 }
 
+/**
+ * @brief Draws a line between two points.
+ * @details The function uses the Bressenham algorithm. 
+ * @see https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
+ * @param img
+ * @param p1 
+ * @param p2 
+ * @param col Color of the line
+ */
 void	ft_draw_line(t_mlx_data *img, t_point p1, t_point p2, int col)
 {
 	if (abs(p2.y - p1.y) < abs(p2.x - p1.x))

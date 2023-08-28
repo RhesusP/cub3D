@@ -6,12 +6,20 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 16:35:53 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/26 12:40:42 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/28 08:36:59 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../../includes/cub3d_bonus.h"
 
+/**
+ * @brief Trace a square of size MINI_SIZE at the position (x, y) in the image.
+ * 
+ * @param data image to draw in
+ * @param x x position of the square (top left corner)
+ * @param y y position of the square (top left corner)
+ * @param color 
+ */
 static void	trace_mini_wall(t_mlx_data *data, int x, int y, int color)
 {
 	int	i;
@@ -30,6 +38,15 @@ static void	trace_mini_wall(t_mlx_data *data, int x, int y, int color)
 	}
 }
 
+/**
+ * @brief Trace a square of size 2 representing the player at the position
+ * (x, y) in the image.
+ * 
+ * @param data image to draw in
+ * @param x x position of the square (top left corner)
+ * @param y y position of the square (top left corner)
+ * @param color 
+ */
 static void	put_mini_player(t_mlx_data *data, int x, int y, int color)
 {
 	int	i;
@@ -48,6 +65,10 @@ static void	put_mini_player(t_mlx_data *data, int x, int y, int color)
 	}
 }
 
+/**
+ * @brief Trace rays representing the player's vision.
+ * @param map 
+ */
 static void	trace_mini_rays(t_map_info *map)
 {
 	int		i;
@@ -64,6 +85,12 @@ static void	trace_mini_rays(t_map_info *map)
 	}
 }
 
+/**
+ * @brief Draw the minimap (walls, player, rays)
+ * 
+ * @param map 
+ * @param img 
+ */
 void	draw_minimap(t_map_info *map, t_mlx_data *img)
 {
 	int		i;

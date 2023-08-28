@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:34:21 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/26 12:40:36 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/28 09:01:47 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ typedef struct s_text
 	int			is_init;
 }	t_text;
 
-// 0 is x, 1 is y
 typedef struct s_frame
 {
 	t_point		point;
