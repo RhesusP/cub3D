@@ -6,7 +6,7 @@
 #    By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/08/23 15:31:24 by svanmeen         ###   ########.fr        #
+#    Updated: 2023/08/28 20:12:49 by svanmeen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,6 @@ SRCS	=	./srcs/main.c \
 			./srcs/getmap.c \
 			./srcs/backtracking.c \
 			./srcs/utils.c \
-			./srcs/track.c \
 
 MINILIBX_DIR	=	minilibx_opengl/
 MINILIBX_NAME	=	libmlx.a

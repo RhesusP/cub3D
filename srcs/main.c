@@ -6,7 +6,7 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:25:31 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/23 13:58:39 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/08/28 18:25:30 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ int	main(int argc, char **argv)
 	rsc = parse_file(fd);
 	if (!rsc)
 		return (print_error("Parsing error\n"));
-	/*if (fd == -1)
-		return (perror("open :"));*/
 	ft_free_settings(rsc->settings);
 	free(rsc);
 	return (0);

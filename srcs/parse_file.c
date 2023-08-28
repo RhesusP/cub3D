@@ -6,12 +6,14 @@
 /*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 21:24:17 by svanmeen          #+#    #+#             */
-/*   Updated: 2023/08/23 15:30:54 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/08/28 20:17:09 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/cub3d.h"
 
+/// @brief free a string array
+/// @param split 
 void	ft_free_split(char **split)
 {
 	int	i;
@@ -22,6 +24,9 @@ void	ft_free_split(char **split)
 	free(split);
 }
 
+/// @brief get the color of "R,G,B" string and return it as an int or print an error and return 0 if the color is invalid
+/// @param str 
+/// @return 
 int	ft_get_color(char *str)
 {
 	int		i;
@@ -43,6 +48,9 @@ int	ft_get_color(char *str)
 	return (color);
 }
 
+/// @brief return the length of a string array
+/// @param strs 
+/// @return 
 int	ft_strslen(char **strs)
 {
 	int	i;
@@ -53,6 +61,10 @@ int	ft_strslen(char **strs)
 	return (i);
 }
 
+/// @brief check if a string is in another string
+/// @param str 
+/// @param charset 
+/// @return 
 int	ft_strschr(char *str, char *charset)
 {
 	int	i;
@@ -73,6 +85,9 @@ int	ft_strschr(char *str, char *charset)
 	return (0);
 }
 
+/// @brief get the next line of the file none empty or return NULL if the file is empty
+/// @param fd 
+/// @return 
 char	*get_next_data(int fd)
 {
 	char	*line;
@@ -88,6 +103,10 @@ char	*get_next_data(int fd)
 	return (line);
 }
 
+/// @brief get settings of the map and store them in a t_settings struct or return 1 if an error occured
+/// @param fd 
+/// @param set 
+/// @return 
 int	get_settings(int fd, t_settings *set)
 {
 	char		*raw_line;
@@ -123,6 +142,9 @@ int	get_settings(int fd, t_settings *set)
 	return (0);
 }
 
+/// @brief Initialize a t_settings struct and return it or NULL if an error occured
+/// @param  
+/// @return 
 t_settings	*init_settings(void)
 {
 	t_settings	*settings;
@@ -143,6 +165,9 @@ t_settings	*init_settings(void)
 	return (settings);
 }
 
+/// @brief Initialize a t_rsc struct and return it or NULL if an error occured
+/// @param  
+/// @return 
 t_rsc	*init_rsc(void)
 {
 	t_rsc	*rsc;
@@ -156,20 +181,9 @@ t_rsc	*init_rsc(void)
 	return (rsc);
 }
 
-void	print_raw(t_map *raw)
-{
-	int	i;
-
-	i = 0;
-	while (raw[i].val != -1)
-	{
-		ft_printf("%c", raw[i].val);
-		if (raw[i + 1].x != raw[i].x)
-			ft_printf("\n");
-		i++;
-	}
-}
-
+/// @brief Parse file and return a t_rsc struct or NULL if an error occured or map is invalid
+/// @param fd 
+/// @return 
 t_rsc	*parse_file(int fd)
 {
 	t_rsc	*rsc;
@@ -183,7 +197,7 @@ t_rsc	*parse_file(int fd)
 	raw = get_raw_map(fd, rsc);
 	if (!raw)
 		return (NULL);
-	if (backtrack(rsc->settings, raw))
+	if (ismapclosed(rsc->settings, raw))
 		return (NULL);
 	return (rsc);
 }
