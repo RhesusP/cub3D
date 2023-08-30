@@ -6,48 +6,78 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 23:49:12 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/26 12:41:59 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/27 12:14:11 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../../includes/cub3d.h"
 
-static t_dda_vars	get_ver_utils(t_dda_vars var, t_map_info *map, int right)
+/**
+ * @brief Calculates utils for the vertical DDA algorithm.
+ * @details The slope is calculated using the angle of the ray. The delta_x and
+ * delta_y (difference between the current and next points) are calculated using
+ * the slope and the direction of the ray. The starting point for wall detection
+ * is calculated using the player position and the slope.
+ * @param u 
+ * @param map 
+ * @param right 1 if the ray is facing right, 0 otherwise
+ * @return t_dda_vars 
+ */
+static t_dda_vars	get_ver_utils(t_dda_vars u, t_map_info *map, int right)
 {
 	double	slope;
 
-	slope = var.angle_sin / var.angle_cos;
+	slope = u.angle_sin / u.angle_cos;
 	if (right)
-		var.delta_x = 1;
+		u.delta_x = 1;
 	else
-		var.delta_x = -1;
-	var.delta_y = var.delta_x * slope;
+		u.delta_x = -1;
+	u.delta_y = u.delta_x * slope;
 	if (right)
-		var.x = ceil(map->player.map_pos.x);
+		u.x = ceil(map->player.map_pos.x);
 	else
-		var.x = floor(map->player.map_pos.x);
-	var.y = map->player.map_pos.y + (var.x - map->player.map_pos.x) * slope;
-	return (var);
+		u.x = floor(map->player.map_pos.x);
+	u.y = map->player.map_pos.y + (u.x - map->player.map_pos.x) * slope;
+	return (u);
 }
 
-static t_dda_vars	get_hor_utils(t_dda_vars var, t_map_info *map, int up)
+/**
+ * @brief Calculates utils for the horizontal DDA algorithm.
+ * @details The slope is calculated using the angle of the ray. The delta_x and
+ * delta_y (difference between the current and next points) are calculated using
+ * the slope and the direction of the ray. The starting point for wall detection 
+ * is calculated using the player position and the slope.
+ * @param u 
+ * @param map 
+ * @param up 1 if the ray is facing up, 0 otherwise
+ * @return t_dda_vars 
+ */
+static t_dda_vars	get_hor_utils(t_dda_vars u, t_map_info *map, int up)
 {
 	double	slope;
 
-	slope = var.angle_cos / var.angle_sin;
+	slope = u.angle_cos / u.angle_sin;
 	if (up)
-		var.delta_y = -1;
+		u.delta_y = -1;
 	else
-		var.delta_y = 1;
-	var.delta_x = var.delta_y * slope;
+		u.delta_y = 1;
+	u.delta_x = u.delta_y * slope;
 	if (up)
-		var.y = floor(map->player.map_pos.y);
+		u.y = floor(map->player.map_pos.y);
 	else
-		var.y = ceil(map->player.map_pos.y);
-	var.x = map->player.map_pos.x + (var.y - map->player.map_pos.y) * slope;
-	return (var);
+		u.y = ceil(map->player.map_pos.y);
+	u.x = map->player.map_pos.x + (u.y - map->player.map_pos.y) * slope;
+	return (u);
 }
 
+/**
+ * @brief Search for the first vertical wall hit by the ray.
+ * 
+ * @param u
+ * @param map 
+ * @param f 
+ * @param angle angle of the ray
+ */
 static void	ver_dda(t_dda_vars u, t_map_info *map, t_frame *f, double angle)
 {
 	int		right;
@@ -73,6 +103,15 @@ static void	ver_dda(t_dda_vars u, t_map_info *map, t_frame *f, double angle)
 	}
 }
 
+/**
+ * @brief Search for the first horizontal wall hit by the ray and stores the
+ * closest distance between the vertical and horizontal walls in the frame
+ * structure.
+ * @param u 
+ * @param map 
+ * @param f 
+ * @param angle angle of the ray
+ */
 static void	hor_dda(t_dda_vars u, t_map_info *map, t_frame *f, double angle)
 {
 	int		up;
@@ -102,6 +141,17 @@ static void	hor_dda(t_dda_vars u, t_map_info *map, t_frame *f, double angle)
 	}
 }
 
+/**
+ * @brief Performs the DDA algorithm.
+ * @details The DDA algorithm is used to detect the first wall hit by a ray.
+ * The algorithm is performed for both vertical and horizontal walls and the 
+ * closest wall is selected. The distance between the player and the wall,
+ * orientation of the ray and the height of the wall are stored in the frame
+ * structure.
+ * @param map 
+ * @param ray_angle 
+ * @param frame 
+ */
 void	dda(t_map_info *map, double ray_angle, t_frame *frame)
 {
 	t_dda_vars	utils;

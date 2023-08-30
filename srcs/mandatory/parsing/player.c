@@ -6,35 +6,44 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 09:34:59 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/26 12:41:59 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/27 12:29:50 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../../includes/cub3d.h"
 
 /**
- * @brief Get the player orientation given in map description
- * @details Here are possible directions :
+ * @brief Associates a description character to an orientation in radians.
+ * @details Here are possible orientations:
  * - North 270.0° or 3 * M_PI_2 rad
  * - South 90.0° or M_PI_2 rad
  * - East 0.0° or 0.0 rad
  * - West 180.0° or M_PI
- * @param orientation char found in map description
+ * By default, the orientation is North (270.0° or 3 * M_PI_2 rad).
+ * @param orientation 
  * @return double 
  */
-static double	get_player_orientation(char orientation)
+static double	get_player_orientation(char c)
 {
-	if (orientation == 'N')
+	if (c == 'N')
 		return (3 * M_PI_2);
-	else if (orientation == 'S')
+	else if (c == 'S')
 		return (M_PI_2);
-	else if (orientation == 'E')
+	else if (c == 'E')
 		return (0.0);
-	else if (orientation == 'W')
+	else if (c == 'W')
 		return (M_PI);
 	return (3 * M_PI_2);
 }
 
+/**
+ * @brief Initializes the player starting position and orientation.
+ * @details The player starting position is the center of the cell where the
+ * player orientation is given in map description. The player orientation is
+ * given in radians.
+ * 
+ * @param map
+ */
 void	get_start_pos(t_map_info *map)
 {
 	int	i;

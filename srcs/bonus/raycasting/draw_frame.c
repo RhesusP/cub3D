@@ -6,12 +6,18 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 11:12:48 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/26 18:53:46 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/30 13:50:03 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../../includes/cub3d_bonus.h"
 
+/**
+ * @brief Draws a slice of the image.
+ * @details As we throw half as many rays as horizontal pixels, we need to draw
+ * two slices of the image for each ray.
+ * @param map 
+ */
 static void	draw_image(t_map_info *map)
 {
 	int	i;
@@ -28,8 +34,15 @@ static void	draw_image(t_map_info *map)
 	}
 }
 
-// Radian to degree = o * 180/pi
-// Degree to radian = o * pi/180
+/**
+ * @brief Calls the DDA algorithm for each ray.
+ * @details The function casts NB_RAYS rays from the player position and
+ * calls the DDA algorithm for each ray to detect the first wall hit.
+ * Hit informations are stored in the frame array stored in the map structure.
+ * @see dda
+ * @see t_frame
+ * @param map 
+ */
 static void	raycasting(t_map_info *map)
 {
 	int		i;
@@ -54,6 +67,13 @@ static void	raycasting(t_map_info *map)
 	}
 }
 
+/**
+ * @brief Draw a frame (image) of the game.
+ * @details The function calls the raycasting function and then draws the image
+ * on the screen.
+ * @see raycasting
+ * @param map 
+ */
 void	draw_frame(t_map_info *map)
 {
 	map->mlx_img.img = mlx_new_image(map->mlx, WIDTH, HEIGHT);

@@ -6,12 +6,22 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 09:32:29 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/26 12:41:59 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/27 13:10:20 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../../includes/cub3d.h"
 
+/**
+ * @brief Loads the north texture and stores it in the map structure.
+ * @details Spaces and ending newlines are removed from the path. If the 
+ * texture is already initialized, the function returns 1. Else, the texture 
+ * is loaded with mlx_xpm_file_to_image and stored in the map structure.
+ * @param line 
+ * @param map
+ * @return int 1 if the texture is correctly loaded or already initialized, 0 
+ * otherwise 
+ */
 static int	add_no_texture(char *line, t_map_info *map)
 {
 	int		i;
@@ -35,6 +45,16 @@ static int	add_no_texture(char *line, t_map_info *map)
 	return (1);
 }
 
+/**
+ * @brief Loads the south texture and stores it in the map structure.
+ * @details Spaces and ending newlines are removed from the path. If the 
+ * texture is already initialized, the function returns 1. Else, the texture 
+ * is loaded with mlx_xpm_file_to_image and stored in the map structure.
+ * @param line 
+ * @param map 
+ * @return int 1 if the texture is correctly loaded or already initialized, 0 
+ * otherwise 
+ */
 static int	add_so_texture(char *line, t_map_info *map)
 {
 	int		i;
@@ -58,6 +78,16 @@ static int	add_so_texture(char *line, t_map_info *map)
 	return (1);
 }
 
+/**
+ * @brief Loads the east texture and stores it in the map structure.
+ * @details Spaces and ending newlines are removed from the path. If the 
+ * texture is already initialized, the function returns 1. Else, the texture 
+ * is loaded with mlx_xpm_file_to_image and stored in the map structure.
+ * @param line 
+ * @param map 
+ * @return int 1 if the texture is correctly loaded or already initialized, 0 
+ * otherwise
+ */
 static int	add_ea_texture(char *line, t_map_info *map)
 {
 	int		i;
@@ -81,6 +111,16 @@ static int	add_ea_texture(char *line, t_map_info *map)
 	return (1);
 }
 
+/**
+ * @brief Loads the west texture and stores it in the map structure.
+ * @details Spaces and ending newlines are removed from the path. If the 
+ * texture is already initialized, the function returns 1. Else, the texture 
+ * is loaded with mlx_xpm_file_to_image and stored in the map structure.
+ * @param line 
+ * @param map 
+ * @return int 1 if the texture is correctly loaded or already initialized, 0 
+ * otherwise
+ */
 static int	add_we_texture(char *line, t_map_info *map)
 {
 	int		i;
@@ -104,6 +144,17 @@ static int	add_we_texture(char *line, t_map_info *map)
 	return (1);
 }
 
+/**
+ * @brief Adds the texture described in the line to the map structure.
+ * @details The function checks the first characters of the line to determine
+ * which texture to load. If the line does not match any texture, the function
+ * returns -1. Else, the function calls the corresponding function to load the
+ * texture.
+ * @param map 
+ * @param line
+ * @return int 1 if the texture is correctly loaded, 0 if an error occurs, 
+ * -1 if the line does not match any texture
+ */
 int	add_texture(t_map_info *map, char *line)
 {
 	if (ft_strncmp(line, "NO ", 3) == 0)

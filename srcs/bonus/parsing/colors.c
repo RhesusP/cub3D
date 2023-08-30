@@ -6,12 +6,19 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 09:32:12 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/26 12:40:53 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/27 13:11:53 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../../includes/cub3d_bonus.h"
 
+/**
+ * @brief Checks if the color syntax is valid.
+ * @details The color syntax is valid if it contains only digits, spaces and 
+ * signs.
+ * @param str 
+ * @return int atoi of the color if the syntax is valid, -1 otherwise
+ */
 static int	check_color_syntax(char *str)
 {
 	char	*temp;
@@ -35,6 +42,15 @@ static int	check_color_syntax(char *str)
 	return (col);
 }
 
+/**
+ * @brief Transforms a string with the "R,G,B" format into a mlx color.
+ * @details The string is split with the ',' character. The first part is the
+ * red value, the second part is the green value and the third part is the blue
+ * value. If the string doesn't contain exactly three parts, if the syntax is 
+ * invalid or if the color is out of range, the function returns -1.
+ * @param str 
+ * @return int mlx color if the string is correctly parsed, -1 otherwise
+ */
 static int	ft_get_color(char *str)
 {
 	int		r;
@@ -64,6 +80,13 @@ static int	ft_get_color(char *str)
 	return (create_mlx_color(0, r, g, b));
 }
 
+/**
+ * @brief Adds the floor color described in the line to the map structure.
+ * 
+ * @param line 
+ * @param map 
+ * @return int 1 if the color is correctly added, 0 if an error occurs
+ */
 static int	add_floor_color(char *line, t_map_info *map)
 {
 	int	i;
@@ -81,6 +104,13 @@ static int	add_floor_color(char *line, t_map_info *map)
 	return (1);
 }
 
+/**
+ * @brief Adds the ceiling color described in the line to the map structure.
+ * 
+ * @param line 
+ * @param map 
+ * @return int 1 if the color is correctly added, 0 if an error occurs
+ */
 static int	add_ceiling_color(char *line, t_map_info *map)
 {
 	int	i;
@@ -98,6 +128,13 @@ static int	add_ceiling_color(char *line, t_map_info *map)
 	return (1);
 }
 
+/**
+ * @brief Adds the color described in the line to the map structure.
+ * 
+ * @param map 
+ * @param line 
+ * @return int 1 if the color is correctly added, 0 if an error occurs.
+ */
 int	add_color(t_map_info *map, char *line)
 {
 	if (ft_strncmp(line, "F ", 2) == 0)

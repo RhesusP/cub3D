@@ -6,12 +6,22 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 09:15:19 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/26 12:40:56 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/27 13:09:25 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../../includes/cub3d_bonus.h"
 
+/**
+ * @brief Search textures and colors in the given line.
+ * @details If the line is a texture description, the texture is loaded and 
+ * stored in the map structure. If the line is a color description, the color 
+ * is stored in the map structure. If an unexpected character is found, the 
+ * function returns 0.
+ * @param line 
+ * @param map 
+ * @return int 1 if the line is correctly parsed, 0 if an error occured.
+ */
 static int	get_line(char *line, t_map_info *map)
 {
 	static int	max_width = 0;
@@ -40,6 +50,16 @@ static int	get_line(char *line, t_map_info *map)
 	return (1);
 }
 
+/**
+ * @brief Fills a row of the map array with the map description.
+ * @details Every character of the line is checked and stored in the map array.
+ * If the line is shorter than the map width, the remaining characters are filled
+ * with spaces.
+ * @param line
+ * @param map 
+ * @param row 
+ * @return int 1 if the row is correctly filled, 0 if an error occured 
+ */
 static int	fill_map_row(char *line, t_map_info *map, int row)
 {
 	int	i;
@@ -63,6 +83,13 @@ static int	fill_map_row(char *line, t_map_info *map, int row)
 	return (1);
 }
 
+/**
+ * @brief Fills the map array with the map description.
+ * 
+ * @param map_path 
+ * @param map 
+ * @return int 1 if the map array is correctly filled, 0 if an error occured
+ */
 static int	fill_map_array(char *map_path, t_map_info *map)
 {
 	int		fd;
@@ -92,6 +119,13 @@ static int	fill_map_array(char *map_path, t_map_info *map)
 	return (1);
 }
 
+/**
+ * @brief Browses the map file searching for map description lines 
+ * (C, F, NO, SO, WE, EA).
+ * @param map_path 
+ * @param map 
+ * @return int 1 if the map is correctly scanned, 0 if an error occured
+ */
 static int	scan_map(char *map_path, t_map_info *map)
 {
 	int		fd;
@@ -118,6 +152,16 @@ static int	scan_map(char *map_path, t_map_info *map)
 	return (1);
 }
 
+/**
+ * @brief Parses the map description and stores it in the map structure.
+ * @details The function scans the map description and stores it in a 2D 
+ * char array. The map description is checked for errors and the player 
+ * position and orientation are stored in the map structure. Textures 
+ * and colors are also checked and stored in the map structure.
+ * @param map_path
+ * @param map
+ * @return int 1 if the map is correctly parsed, 0 if an error occured
+ */
 int	parse_map(char *map_path, t_map_info *map)
 {
 	if (!scan_map(map_path, map))

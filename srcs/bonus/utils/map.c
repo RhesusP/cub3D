@@ -6,12 +6,18 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 10:12:56 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/26 23:08:48 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/30 13:49:58 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../../includes/cub3d_bonus.h"
 
+/**
+ * @brief Checks if the character is a player orientation.
+ * 
+ * @param c 
+ * @return int 1 if the character is a player orientation, 0 otherwise
+ */
 int	char_is_player(char c)
 {
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
@@ -19,6 +25,13 @@ int	char_is_player(char c)
 	return (0);
 }
 
+/**
+ * @brief Checks if the character is a valid map description character.
+ * 
+ * @param c
+ * @return int 1 if the character is a valid map description character, 0 
+ * otherwise
+ */
 int	is_desc_char_valid(char c)
 {
 	if (c == ' ' || c == '0' || c == '1' || char_is_player(c))
@@ -26,6 +39,13 @@ int	is_desc_char_valid(char c)
 	return (0);
 }
 
+/**
+ * @brief Checks if the line belong to a map description.
+ * @details A line belong to the map description if it is not empty and does not
+ * start with a valid map element description (NO, SO, WE, EA, F, C)
+ * @param line 
+ * @return int 1 if the line belong to a map description, 0 otherwise
+ */
 int	is_map_desc(char *line)
 {
 	if (!line || line[0] == '\0' || line[0] == '\n')
@@ -46,6 +66,13 @@ int	is_map_desc(char *line)
 		return (1);
 }
 
+/**
+ * @brief Initializes the map info structure.
+ * @details The map info structure contains all the information about the map.
+ * Textures are allocated.
+ * @param map map info structure to initialize
+ * @return int 1 if the initialization is successful, 0 otherwise
+ */
 int	init_void_map(t_map_info *map)
 {
 	if (!init_no_text(map))
@@ -71,6 +98,14 @@ int	init_void_map(t_map_info *map)
 	return (1);
 }
 
+/**
+ * @brief Initializes the map 2D char array.
+ * @details The map 2D char array contains the map description.
+ * @param map 
+ * @param height map description height
+ * @param width map description width
+ * @return int 1 if the initialization is successful, 0 otherwise
+ */
 int	init_map_array(t_map_info *map, int height, int width)
 {
 	int	i;

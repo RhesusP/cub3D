@@ -6,12 +6,20 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 23:57:20 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/26 12:41:14 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/27 13:00:37 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../../includes/cub3d_bonus.h"
 
+/**
+ * @brief Checks if the coordinates are within the map boundaries.
+ * 
+ * @param map 
+ * @param x 
+ * @param y 
+ * @return int 1 if the coordinates are within the map boundaries, 0 otherwise 
+ */
 int	coords_within_boundaries(t_map_info *map, int x, int y)
 {
 	if (x >= 0 && x < map->map_width * CUBE_SIZE && \
@@ -20,6 +28,14 @@ int	coords_within_boundaries(t_map_info *map, int x, int y)
 	return (0);
 }
 
+/**
+ * @brief Checks if the coordinates are on a wall.
+ * 
+ * @param map
+ * @param x 
+ * @param y 
+ * @return int 1 if the coordinates are on a wall, 0 otherwise 
+ */
 int	is_wall(t_map_info *map, int x, int y)
 {
 	x = (int)floor(x / CUBE_SIZE);
@@ -29,6 +45,16 @@ int	is_wall(t_map_info *map, int x, int y)
 	return (0);
 }
 
+/**
+ * @brief Fill the frame informations for a vertical wall.
+ * @details The distance is calculated using the Pythagorean theorem. The point
+ * coordinates are the coordinates of the wall. The axis is set to 1 (vertical).
+ * The wall face is set to WEST if the ray is facing right, EAST otherwise.
+ * @param f 
+ * @param map 
+ * @param u 
+ * @param r 1 if the ray is facing right, 0 otherwise
+ */
 void	fill_frm_ver(t_frame *f, t_map_info *map, t_dda_vars u, int r)
 {
 	f->distance = sqrt(pow(u.x - map->player.map_pos.x, 2) + \
@@ -42,6 +68,15 @@ void	fill_frm_ver(t_frame *f, t_map_info *map, t_dda_vars u, int r)
 		f->wall_face = EAST;
 }
 
+/**
+ * @brief Fill the frame informations for an horizontal wall.
+ * @details The point coordinates are the coordinates of the wall. The axis is
+ * set to 0 (horizontal). The wall face is set to SOUTH if the ray is facing up,
+ * NORTH otherwise.
+ * @param f 
+ * @param u 
+ * @param up 1 if the ray is facing up, 0 otherwise
+ */
 void	fill_frm_hor(t_frame *f, t_dda_vars u, int up)
 {
 	f->point.x = u.x;
@@ -53,6 +88,13 @@ void	fill_frm_hor(t_frame *f, t_dda_vars u, int up)
 		f->wall_face = NORTH;
 }
 
+/**
+ * @brief Approximates the y coordinate of a potential wall hit by the ray.
+ * 
+ * @param utils 
+ * @param up 1 if the ray is facing up, 0 otherwise
+ * @return double
+ */
 double	get_wall_y(t_dda_vars utils, int up)
 {
 	double	wall_y;

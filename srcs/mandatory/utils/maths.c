@@ -6,12 +6,18 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 14:02:52 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/26 12:41:59 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/27 04:14:52 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../../../includes/cub3d.h"
 
+/**
+ * @brief Normalizes an angle between 0 and 2PI
+ * 
+ * @param rad_angle
+ * @return double 
+ */
 double	normalize_angle(double rad_angle)
 {
 	if (rad_angle >= TWO_PI)
