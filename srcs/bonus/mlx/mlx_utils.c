@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 12:24:29 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/30 13:50:50 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/30 14:58:17 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,70 +101,6 @@ static int	key_hook(int keycode, t_map_info *map)
 	return (0);
 }
 
-int funct(int x, int y, void *param)
-{
-	t_map_info	*map;
-
-	map = (t_map_info *)param;
-
-	if ((x > 0 && x < WIDTH) && (y > 0 && y < HEIGHT))
-	{
-		if (map->mouse_x < x)
-			rotate_right(map);
-		else if (map->mouse_x > x)
-			rotate_left(map);
-		map->mouse_x = x;
-	}
-	// static		t_point	ref = {-1, -1};
-	// int			delta_x;
-
-	// printf("ref: (%d, %d)\n", ref.x, ref.y);
-	// printf("x: %d, y: %d\n", x, y);
-	// if (x <= 20 || x > WIDTH - 20 || y <= 20 || y > HEIGHT - 20)
-	// {
-	// 	printf("mouse out\n");
-	// 	ref.x = -1;
-	// 	ref.y = -1;
-	// }
-	// if (ref.x == -1 && ref.y == -1)
-	// {
-	// 	ref.x = x;
-	// 	ref.y = y;
-	// }
-	// map = (t_map_info *)param;
-
-	// delta_x = x - ref.x;
-	// printf("delta_x: %d\n", delta_x);
-	// delta_x /= 4;
-	// printf("delta_x: %d\n", delta_x);
-	// if (delta_x > 0)
-	// {
-	// 	mlx_destroy_image(map->mlx, map->mlx_img.img);
-	// 	map->player.dir += ROT_SPEED;
-	// 	map->player.dir = normalize_angle(map->player.dir);
-	// 	draw_frame(map);
-	// }
-	// else if (delta_x < 0)
-	// {
-	// 	mlx_destroy_image(map->mlx, map->mlx_img.img);
-	// 	map->player.dir -= ROT_SPEED;
-	// 	map->player.dir = normalize_angle(map->player.dir);
-	// 	draw_frame(map);
-	// }
-
-
-
-
-	// delta_x = x - NB_RAYS;
-	// printf("delta_x: %d\n", delta_x);
-
-	// mlx_destroy_image(map->mlx, map->mlx_img.img);
-	// map->player.dir += ROT_SPEED;
-	// map->player.dir = normalize_angle(map->player.dir);
-	// draw_frame(map);
-	return (0);
-}
-
 /**
  * @brief Main game loop.
  * @details The function initializes the mlx window and calls the key_hook 
@@ -176,7 +112,6 @@ void	game_loop(t_map_info *map)
 	mlx_do_key_autorepeaton(map->mlx);
 	mlx_hook(map->mlx_win, 2, 1L << 0, key_hook, map);
 	mlx_hook(map->mlx_win, 17, (1L << 2), free_map, map);
-	mlx_hook(map->mlx_win, 6, (1L << 6), funct, map);
 	draw_frame(map);
 	mlx_loop(map->mlx);
 }

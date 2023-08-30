@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:34:21 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/30 13:50:29 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/30 15:08:01 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ int				load_texture(t_map_info *map, t_text *texture, char *path);
 /* ------- PARSING -------*/
 int				add_texture(t_map_info *map, char *line);
 int				map_have_one_player(char **map);
+int				is_map_closed(char **map);
 int				text_col_complete(t_map_info *map);
 void			get_start_pos(t_map_info *map);
 int				parse_map(char *map_path, t_map_info *map);

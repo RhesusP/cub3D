@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 09:15:19 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/27 13:08:46 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/30 15:04:45 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,11 @@ int	parse_map(char *map_path, t_map_info *map)
 		return (free_allocated_text(map));
 	}
 	if (!map_have_one_player(map->map))
+	{
+		free_allocated_array(&map->map, 0);
+		return (free_allocated_text(map));
+	}
+	if (!is_map_closed(map->map))
 	{
 		free_allocated_array(&map->map, 0);
 		return (free_allocated_text(map));

@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 22:09:02 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/27 12:58:27 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/30 15:07:41 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,43 @@ int	map_have_one_player(char **map)
 	}
 	if (!player_detected)
 		return (print_error("no player specified in map description\n", 0));
+	return (1);
+}
+
+int	valid_surroundings(char **map, int i, int j)
+{
+	if (map[i - 1][j] == ' ' || map[i + 1][j] == ' ' \
+		|| map[i][j - 1] == ' ' || map[i][j + 1] == ' ' \
+		|| !map[i - 1][j] || !map[i + 1][j] \
+		|| !map[i][j - 1] || !map[i][j + 1])
+		return (0);
+	return (1);
+}
+
+/**
+ * @brief Checks if the map description is surrounded by walls.
+ * 
+ * @param map 2d array containing the map description
+ * @return int 1 if the map is surrounded by walls, 0 otherwise
+ */
+int	is_map_closed(char **map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (ft_strchr("NSWE", map[i][j]) && !valid_surroundings(map, i, j))
+				return (print_error("map is not closed\n", 0));
+			if (map[i][j] == '0' && !valid_surroundings(map, i, j))
+				return (print_error("map is not closed\n", 0));
+			j++;
+		}
+		i++;
+	}
 	return (1);
 }
