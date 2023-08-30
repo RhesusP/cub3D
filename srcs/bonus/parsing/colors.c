@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 09:32:12 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/27 13:11:53 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/30 20:26:39 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ static int	check_color_syntax(char *str)
 	int		i;
 	int		col;
 
+	i = 0;
+	while (str[i] == ' ')
+		i++;
+	if (ft_strlen_wnl(&str[i]) == 0)
+		return (-1);
 	temp = ft_strdup_wnls(str);
 	i = 0;
 	while (temp[i] != '\0')
@@ -56,24 +61,19 @@ static int	ft_get_color(char *str)
 	int		r;
 	int		g;
 	int		b;
-	int		i;
 	char	**split;
 
 	split = ft_split(str, ',');
 	if (!split)
 		return (print_error("malloc failed\n", -1));
-	i = -1;
-	while (split[++i])
+	if (ft_char_array_len(split) != 3)
 	{
-		if (i == 0)
-			r = check_color_syntax(split[i]);
-		else if (i == 1)
-			g = check_color_syntax(split[i]);
-		else if (i == 2)
-			b = check_color_syntax(split[i]);
-		else
-			return (free_allocated_array(&split, 1));
+		free_allocated_array(&split, 0);
+		return (print_error("invalid color format\n", -1));
 	}
+	r = check_color_syntax(split[0]);
+	g = check_color_syntax(split[1]);
+	b = check_color_syntax(split[2]);
 	free_allocated_array(&split, 0);
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 		return (print_error("color is out of range [0, 255]\n", -1));

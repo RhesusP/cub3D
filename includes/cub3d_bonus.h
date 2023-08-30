@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:34:21 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/30 15:08:01 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/30 20:29:00 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ void			draw_slice(t_map_info *map, t_frame frame, int index);
 void			ft_draw_line(t_mlx_data *img, t_point p1, t_point p2, int col);
 
 /* -------- UTILS --------*/
-unsigned int	ft_strlen_wnl(char *str);
+unsigned int	ft_strlen_wnl(const char *str);
 char			*ft_strdup_wnls(const char *s1);
 void			move_forward(t_map_info *map);
 void			move_backward(t_map_info *map);
@@ -178,6 +178,7 @@ int				free_allocated_array(char ***array, int is_err);
 int				free_map(t_map_info *map);
 int				print_error(char *str, int exit_status);
 int				is_file_extension_correct(char *filename);
+int				ft_char_array_len(char **array);
 
 /* -------- BONUS --------*/
 void			draw_minimap(t_map_info *map, t_mlx_data *img);

@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 09:33:38 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/27 13:04:45 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/30 20:29:30 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @param str 
  * @return unsigned int 
  */
-unsigned int	ft_strlen_wnl(char *str)
+unsigned int	ft_strlen_wnl(const char *str)
 {
 	unsigned int	i;
 
@@ -54,4 +54,14 @@ char	*ft_strdup_wnls(const char *s1)
 	}
 	res[i] = '\0';
 	return (res);
+}
+
+int	ft_char_array_len(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i] != NULL)
+		i++;
+	return (i);
 }
