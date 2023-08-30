@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:34:21 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/26 12:42:12 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/08/26 23:07:47 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define HEIGHT 720
 # define WIDTH 1280
 # define NB_RAYS 640
+# define DIST_EDGE_MOUSE_WRAP 20
 # define SPEED 10.0
 # define ROT_SPEED 0.06
 
@@ -123,6 +124,7 @@ typedef struct s_map_info
 	char		**map;
 	t_frame		*frame;
 	t_player	player;
+	int			mouse_x;
 }	t_map_info;
 
 /* --------- MLX  --------*/
@@ -179,5 +181,7 @@ int				is_file_extension_correct(char *filename);
 
 /* -------- BONUS --------*/
 void			draw_minimap(t_map_info *map, t_mlx_data *img);
+void			rotate_left(t_map_info *map);
+void			rotate_right(t_map_info *map);
 
 #endif

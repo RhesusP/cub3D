@@ -6,7 +6,7 @@
 #    By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/08/26 13:20:20 by cbernot          ###   ########.fr        #
+#    Updated: 2023/08/26 16:47:53 by cbernot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ LST_MLX			:=	mlx_utils.c		pixel_put.c
 LST_UTILS		:=	free.c			errors.c			map.c		\
 					strings.c		init_textures.c		maths.c		\
 					movement.c
-LST_EXTRA		:=	minimap.c
+LST_EXTRA		:=	minimap.c		rotation.c
 
 # Directories
 DIR_MLX			:=	minilibx-linux/
