@@ -6,7 +6,7 @@
 #    By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/08/26 16:47:53 by cbernot          ###   ########.fr        #
+#    Updated: 2023/08/30 13:54:36 by cbernot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,12 +26,12 @@ LST_INC			:=	cub3d.h
 LST_BONUS_INC	:=	cub3d_bonus.h
 LST_SRC			:=	main.c
 LST_RENDERING	:=	trace.c			bressenham.c
-LST_PARSING		:=	colors.c		textures.c			rules.c		\
-					parse_map.c		player.c
+LST_PARSING		:=	colors.c		textures.c			rules.c			\
+					parse_map.c		player.c			is_map_closed.c
 LST_RAYCASTING	:=	draw_frame.c	dda.c				dda_utils.c
 LST_MLX			:=	mlx_utils.c		pixel_put.c
-LST_UTILS		:=	free.c			errors.c			map.c		\
-					strings.c		init_textures.c		maths.c		\
+LST_UTILS		:=	free.c			errors.c			map.c			\
+					strings.c		init_textures.c		maths.c			\
 					movement.c
 LST_EXTRA		:=	minimap.c		rotation.c
 
