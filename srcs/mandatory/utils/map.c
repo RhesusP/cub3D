@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 10:12:56 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/27 13:06:45 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/10/18 13:36:55 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,8 @@ int	init_map_array(t_map_info *map, int height, int width)
 			return (print_error("malloc failed\n", 0));
 		}
 		map->map[i][width] = '\0';
+		while ((i == height - 1) && width > 0)
+			map->map[i][--width] = ' ';
 		i++;
 	}
 	return (1);
