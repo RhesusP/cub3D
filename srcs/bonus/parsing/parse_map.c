@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 09:15:19 by cbernot           #+#    #+#             */
-/*   Updated: 2023/10/18 13:25:28 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/10/18 15:24:07 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	get_line(char *line, t_map_info *map)
 			max_width = ft_strlen_wnl(line);
 	}
 	else
-		return (print_error("invalid character found in map\n", 0));
+		return (print_error("invalid character found in file\n", 0));
 	map->map_height = height + 1;
 	map->map_width = max_width;
 	return (1);

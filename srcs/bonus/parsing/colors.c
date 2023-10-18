@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 09:32:12 by cbernot           #+#    #+#             */
-/*   Updated: 2023/10/18 13:42:32 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/10/18 15:54:30 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	check_color_syntax(char *str)
 		i++;
 	if (ft_strlen_wnl(&str[i]) == 0)
 		return (-1);
-	temp = ft_strdup_wnls(str);
+	temp = ft_strdup_wnls(&str[i]);
 	i = 0;
 	while (temp[i] != '\0' && ft_isdigit(temp[i]))
 		i++;
