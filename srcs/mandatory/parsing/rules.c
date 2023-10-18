@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rules.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 22:09:02 by cbernot           #+#    #+#             */
-/*   Updated: 2023/10/18 12:31:06 by svanmeen         ###   ########.fr       */
+/*   Updated: 2023/10/18 14:41:15 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	map_have_one_player(char **map)
 			if (!player_detected && char_is_player(map[i][j]))
 				player_detected = 1;
 			else if (player_detected && char_is_player(map[i][j]))
-				return (print_error("multiple players in map description\n", 0));
+				return (print_error("too many players\n", 0));
 			j++;
 		}
 		i++;

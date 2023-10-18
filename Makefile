@@ -6,7 +6,7 @@
 #    By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/01 00:23:19 by cbernot           #+#    #+#              #
-#    Updated: 2023/08/30 15:02:55 by cbernot          ###   ########.fr        #
+#    Updated: 2023/10/18 14:42:53 by cbernot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ LST_RAYCASTING	:=	draw_frame.c	dda.c				dda_utils.c
 LST_MLX			:=	mlx_utils.c		pixel_put.c
 LST_UTILS		:=	free.c			errors.c			map.c			\
 					strings.c		init_textures.c		maths.c			\
-					movement.c
+					movement.c		is_blocking.c
 LST_EXTRA		:=	minimap.c		rotation.c
 
 # Directories

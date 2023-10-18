@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:34:21 by cbernot           #+#    #+#             */
-/*   Updated: 2023/10/18 12:12:49 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/10/18 14:36:23 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,5 +176,9 @@ int				free_map(t_map_info *map);
 int				print_error(char *str, int exit_status);
 int				is_file_extension_correct(char *filename);
 int				ft_char_array_len(char **array);
+int				is_blocking_down(t_map_info *map, int new_x, int new_y);
+int				is_blocking_up(t_map_info *map, int new_x, int new_y);
+int				is_blocking_right(t_map_info *map, int new_x, int new_y);
+int				is_blocking_left(t_map_info *map, int new_x, int new_y);
 
 #endif
