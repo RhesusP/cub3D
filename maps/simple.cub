@@ -1,9 +1,9 @@
-NO textures/door.xpm    
+NO textures/door.xpm  
 SO textures/greystone.xpm
 WE textures/bluestone.xpm
-EA textures/eagle.xpm
+EA textures/landscape.xpm
 
-F 220,100, 4, 4
+F 220,   100,4
 C 225,30,0
 
 11111111111111111
