@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 19:34:21 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/30 20:29:00 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/10/18 12:12:17 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@
 
 # define LEFT_ARROW 65361
 # define RIGHT_ARROW 65363
-# define FORWARD 122
+# define FORWARD 119
 # define BACKWARD 115
-# define LEFT 113
+# define LEFT 97
 # define RIGHT 100
 # define ESC 65307
 
