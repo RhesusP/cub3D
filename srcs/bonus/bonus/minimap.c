@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 16:35:53 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/28 08:36:59 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/10/18 15:37:34 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	draw_minimap(t_map_info *map, t_mlx_data *img)
 	int		j;
 
 	i = 0;
-	while (map->map[i])
+	while (i < map->map_height - 1)
 	{
 		j = 0;
 		while (map->map[i][j])
