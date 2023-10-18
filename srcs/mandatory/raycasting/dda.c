@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 23:49:12 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/27 12:14:11 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/10/18 11:33:54 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ static void	ver_dda(t_dda_vars u, t_map_info *map, t_frame *f, double angle)
 		if (right)
 			wall_x = floor(u.x);
 		else
-			wall_x = floor(u.x - 1); 
+			wall_x = floor(u.x - 1);
 		wall_y = floor(u.y);
 		if (is_wall(map, wall_x, wall_y))
 		{
