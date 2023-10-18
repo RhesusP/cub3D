@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 09:32:12 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/30 19:41:04 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/10/18 13:42:05 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,14 @@ static int	check_color_syntax(char *str)
 		return (-1);
 	temp = ft_strdup_wnls(str);
 	i = 0;
+	while (temp[i] != '\0' && ft_isdigit(temp[i]))
+		i++;
 	while (temp[i] != '\0')
 	{
-		if (!(ft_isdigit(temp[i]) || temp[i] == '+' || temp[i] == '-' || \
-			temp[i] == ' '))
+		if (temp[i] != ' ')
 		{
 			free(temp);
-			return (print_error("invalid character in color\n", -1));
+			return (-1);
 		}
 		i++;
 	}
@@ -76,7 +77,7 @@ static int	ft_get_color(char *str)
 	b = check_color_syntax(split[2]);
 	free_allocated_array(&split, 0);
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-		return (print_error("color is out of range [0, 255]\n", -1));
+		return (print_error("invalid color\n", -1));
 	return (create_mlx_color(0, r, g, b));
 }
 

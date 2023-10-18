@@ -3,7 +3,7 @@ SO textures/eagle.xpm
 WE textures/greystone.xpm
 EA textures/door.xpm
 
-F 100,78,18
+F 100,11  -32 ,18
 C 67,165,215
 
               111111
