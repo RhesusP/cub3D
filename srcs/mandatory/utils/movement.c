@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 12:09:38 by cbernot           #+#    #+#             */
-/*   Updated: 2023/10/18 12:10:22 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/10/18 13:49:29 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,10 @@ static int	is_blocking(t_map_info *map, int new_x, int new_y)
 	if (new_x < 0 || new_x >= map->map_width || new_y < 0 || \
 		new_y >= map->map_height)
 	{
-		printf("cannot move out of boundaries\n");
 		return (1);
 	}
 	if (map->map[new_y][new_x] == '1' || map->map[new_y][new_x] == ' ')
 	{
-		printf("cannot move into a wall\n");
 		return (1);
 	}
 	return (0);
