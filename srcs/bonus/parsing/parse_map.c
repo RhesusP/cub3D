@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 09:15:19 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/30 15:07:20 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/10/18 13:25:28 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	get_line(char *line, t_map_info *map)
 	}
 	else
 		return (print_error("invalid character found in map\n", 0));
-	map->map_height = height;
+	map->map_height = height + 1;
 	map->map_width = max_width;
 	return (1);
 }

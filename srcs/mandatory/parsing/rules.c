@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rules.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: svanmeen <svanmeen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 22:09:02 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/30 15:06:54 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/10/18 12:31:06 by svanmeen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,9 @@ int	map_have_one_player(char **map)
 
 int	valid_surroundings(char **map, int i, int j)
 {
-	if (map[i - 1][j] == ' ' || map[i + 1][j] == ' ' \
+	if ((i == 0 || j == 0) && map[i][j] == '0')
+		return (0);
+	else if (map[i - 1][j] == ' ' || map[i + 1][j] == ' ' \
 		|| map[i][j - 1] == ' ' || map[i][j + 1] == ' ' \
 		|| !map[i - 1][j] || !map[i + 1][j] \
 		|| !map[i][j - 1] || !map[i][j + 1])
