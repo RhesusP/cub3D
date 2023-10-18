@@ -6,7 +6,7 @@
 /*   By: cbernot <cbernot@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:35:43 by cbernot           #+#    #+#             */
-/*   Updated: 2023/08/27 13:02:42 by cbernot          ###   ########.fr       */
+/*   Updated: 2023/10/18 11:30:21 by cbernot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,25 +81,17 @@ int	free_allocated_array(char ***array, int is_err)
 int	free_allocated_text(t_map_info *map)
 {
 	if (map->no_texture->is_init)
-	{
 		mlx_destroy_image(map->mlx, map->no_texture->img);
-		free(map->no_texture);
-	}
 	if (map->so_texture->is_init)
-	{
 		mlx_destroy_image(map->mlx, map->so_texture->img);
-		free(map->so_texture);
-	}
 	if (map->ea_texture->is_init)
-	{
 		mlx_destroy_image(map->mlx, map->ea_texture->img);
-		free(map->ea_texture);
-	}
 	if (map->we_texture->is_init)
-	{
 		mlx_destroy_image(map->mlx, map->we_texture->img);
-		free(map->we_texture);
-	}
+	free(map->no_texture);
+	free(map->so_texture);
+	free(map->ea_texture);
+	free(map->we_texture);
 	return (0);
 }
 
