@@ -213,15 +213,14 @@ We set the FOV and the projection plane (screen) dimensions, we can calculate th
 ![What we know](./imgs/explanations.png)
 
 </div>
-
 * Distance between player and projection plane (`PROJECTION_DISTANCE`) :
-\[ distance=\frac{width/2}{tan(FOV/2)}\]
-\[ distance=\frac{640}{tan(30*\pi/180)}=1108\]
+$$distance=\frac{width/2}{tan(FOV/2)}$$
+$$distance=\frac{640}{tan(30*\pi/180)}=1108$$
 
 > **Note**:
 > We work with radian angles.
 
-* Angle between subsequent rays (`ANGLE_INCR`) :
+* Angle between subsequent rays (`ANGLE_INCR`) : 
 \[increment=\frac{FOV}{width / 2} *\pi/180 \]
 \[increment=\frac{60}{640} *\pi/180 = 0.001636\]
 
@@ -371,8 +370,8 @@ static void	draw_texture_col(t_map_info *map, t_frame frame, int x, int offset)
 ## Useful links
 
 [JavaScript RayCasting tutoriel](https://github.com/vinibiavatti1/RayCastingTutorial/wiki/Home)  
-[Permadi RayCasting tutorial](https://permadi.com/1996/05/ray-casting-tutorial-table-of-contents/)
-[Raycasting PICO-8#4 - The Theory by Blog Création de Jeux Vidéo](https://youtu.be/ZAlMicFhHmM)
-[Do your own raycaster by 3DSage](https://www.youtube.com/watch?v=gYRrGTC7GtA)
-[Sprites database](https://spritedatabase.net/system/pc);
+[Permadi RayCasting tutorial](https://permadi.com/1996/05/ray-casting-tutorial-table-of-contents/)  
+[Raycasting PICO-8#4 - The Theory by Blog Création de Jeux Vidéo](https://youtu.be/ZAlMicFhHmM)  
+[Do your own raycaster by 3DSage](https://www.youtube.com/watch?v=gYRrGTC7GtA)  
+[Sprites database](https://spritedatabase.net/system/pc)  
 [Cub3d tutorial](https://website-b-bischoff.vercel.app/cube3d)
