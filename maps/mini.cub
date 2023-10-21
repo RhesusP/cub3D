@@ -1,10 +1,10 @@
-NO textures/door.xpm  
-SO textures/greystone.xpm
-WE textures/bluestone.xpm
-EA textures/landscape.xpm
+NO textures/ancientstone.xpm
+SO textures/brick.xpm
+EA textures/yellowstone.xpm
+WE textures/greystone.xpm
 
-F 220,100,0
-C 225,30,0
+C 146,141,244
+F 136,46,45
 
 111111
 100001
