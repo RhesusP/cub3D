@@ -214,18 +214,21 @@ We set the FOV and the projection plane (screen) dimensions, we can calculate th
 
 </div>
 * Distance between player and projection plane (`PROJECTION_DISTANCE`) :
-$$distance=\frac{width/2}{tan(FOV/2)}$$
-$$distance=\frac{640}{tan(30*\pi/180)}=1108$$
+$$ distance = {\frac{width / 2}{tan(FOV / 2)}} $$
+$$ distance = {\frac{640}{tan(30) * \pi / 180}} $$
+
+
 
 > **Note**:
 > We work with radian angles.
 
 * Angle between subsequent rays (`ANGLE_INCR`) : 
-\[increment=\frac{FOV}{width / 2} *\pi/180 \]
-\[increment=\frac{60}{640} *\pi/180 = 0.001636\]
+
+$$ increment = {\frac{FOV}{width / 2} * \pi / 180} $$ 
+$$ increment = \frac{60}{640} * \pi / 180 = 0.001636 $$ 
 
 > **Note**:
-> The real formula is \(increment=\frac{FOV}{width}\) but here, we divide the width by 2 to launch a ray every two columns.
+> The real formula is $increment=\frac{FOV}{width}$ but here, we divide the width by 2 to launch a ray every two columns.
 
 ### Finding walls
 
@@ -258,17 +261,17 @@ So, for each ray, we will :
 ![Horizontal intersections DDA](./imgs/horizontal_dda.png)
 
 Here, we have
-\[Xa=\frac{64}{tan(\alpha)}\]
+$$ Xa=\frac{64}{tan(\alpha)} $$
 
 Now, that we know Xa and Ya, we just need to calculates the x and y difference between the player and the first horizontal grid point (the difference between Px and Ax and Py and Ay on the illustration above).
 
 If the ray is facing up :
-\[Ay = floor(\frac{Py}{64}) * 64 - 1\]
+$$ Ay = floor(\frac{Py}{64}) * 64 - 1 $$
 If the ray is facing down :
-\[Ay = floor(\frac{Py}{64}) * 64 - 64\]
+$$ Ay = floor(\frac{Py}{64}) * 64 - 64 $$
 
 Then : 
-\[Ax = Px + \frac{Py - Ay}{tan(\alpha)}\]
+$$ Ax = Px + \frac{Py - Ay}{tan(\alpha)} $$
 
 Now that we have the first point on horizontal axis, we can find other points by incrementing Ax and Ay by Xa and Ya.
 
@@ -277,17 +280,17 @@ Now that we have the first point on horizontal axis, we can find other points by
 ![Vertical intersections DDA](./imgs/vertical_dda.png)
 
 Here, we have
-\[Ya=64 * tan(\alpha)\]
+$$ Ya=64 * tan(\alpha) $$ 
 
 Now, that we know Xa and Ya, we just need to calculates the x and y difference between the player and the first horizontal grid point (the difference between Px and Bx and Py and By on the illustration above).
 
 If the ray is facing right :
-\[Bx = floor(\frac{Px}{64}) * 64 + 64\]
+$$ Bx = floor(\frac{Px}{64}) * 64 + 64 $$
 If the ray is facing left :
-\[Bx = floor(\frac{Px}{64}) * 64 - 1\]
+$$ Bx = floor(\frac{Px}{64}) * 64 - 1 $$
 
 Then :
-\[By = Py + (Px - Bx) * tan(\alpha)\]
+$$ By = Py + (Px - Bx) * tan(\alpha) $$
 
 Now that we have the first point on vertical axis, we can find other points by incrementing Ax and Ay by Xa and Ya.
 
@@ -308,20 +311,20 @@ typedef struct s_frame
 So, each `t_frame` representing a column (or a slice) of the screen
 The distance to the wall can be calculates with the following formula : 
 Let (Px, Py) be the player coordinates and (Ax, Ay) the wall coordinates found with the DDA algorithm :
-\[Distance = \sqrt{(Px - Ax)² + (Py - Ay)²}\]
+$$ Distance = \sqrt{(Px - Ax)² + (Py - Ay)²} $$
 
 > **Avoid fishbowl effect**:
 > To avoid distorsion, we need to multiply the distance by the cosine of the ray angle : 
->  \[corrected\ distance = distorded\ distance * cos(\alpha)\]
+>  $$ corrected\ distance = distorded\ distance * cos(\alpha) $$
 
 
 ### Drawing Walls
 
 We now have the distance and coordinates of the walls the player sees. In order to draw the walls, we need to calculate their height.
 Each wall is splited in slices. We can deduce the height of a slice with this formula : 
-\[Projected\ slice\ height = \frac{Actual\ slice\ height}{Distance\ to\ the\ slice} * Distance\ to\ the\ projection\ plane \]
+$$ Projected\ slice\ height = \frac{Actual\ slice\ height}{Distance\ to\ the\ slice} * Distance\ to\ the\ projection\ plane $$
 In our case, we have :
-\[Projected\ slice\ height = \frac{64}{Distance\ to\ the\ slice} * 1108\]
+$$ Projected\ slice\ height = \frac{64}{Distance\ to\ the\ slice} * 1108 $$
 
 Now that we know the height of the slice, we can start to draw untextured walls. For example, if the height of our projection plane is 720 and the height of the slice is 300, we can draw our entire slice (ceil + wall + floor) by centering the wall fill the top of the wall (ceil) and bottom of the wall (floor) with the appropriate colors described in our `.cub` file.
 
